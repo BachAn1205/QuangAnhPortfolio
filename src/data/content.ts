@@ -25,7 +25,8 @@ export const hero = {
   ctaSecondaryHref: "#contact",
   portraitAlt:
     "Quang Anh working with electronic circuits and presenting engineering work",
-  portraitSrc: "https://picsum.photos/seed/quang-anh-lab-bench/900/1100",
+  portraitGuideline:
+    "Ảnh chân dung làm việc với mạch điện / trình bày dự án kỹ thuật (tỷ lệ dọc ưu tiên).",
   metrics: [
     {
       label: "A*A*A*A*",
@@ -60,20 +61,20 @@ export const about = {
   ],
   images: [
     {
-      src: "https://picsum.photos/seed/bosworth-campus-quang/640/480",
       caption: "At Bosworth Independent School.",
       alt: "Campus life at Bosworth Independent School",
+      guideline: "Ảnh cuộc sống / khuôn viên tại Bosworth Independent School.",
     },
     {
-      src: "https://picsum.photos/seed/electronics-desk-books/640/640",
       caption:
         "Close-up of the workbench with projects and engineering books.",
       alt: "Electronics workbench with projects and textbooks",
+      guideline: "Ảnh bàn làm việc điện tử, dự án và sách kỹ thuật.",
     },
     {
-      src: "https://picsum.photos/seed/sports-host-broadcast/640/480",
       caption: "Sports activity or hosting a programme.",
       alt: "Sports activity and media hosting",
+      guideline: "Ảnh hoạt động thể thao hoặc đang host chương trình / livestream.",
     },
   ],
   quickFacts: [
@@ -98,7 +99,8 @@ export type Project = {
   behindTheScenes: string;
   mediaNote: string;
   dissertationCta?: string;
-  imageSeeds: string[];
+  /** Hướng dẫn từng ô upload (không dùng ảnh mẫu) */
+  mediaGuides: string[];
 };
 
 export const projectsSection = {
@@ -131,7 +133,11 @@ export const projects: Project[] = [
       "The hardest part was keeping thermal, humidity, and flame sensors in sync on a shared ESP32/Arduino protection bus without false trips. When load risk rises, the cut-off circuit and the power-allocation algorithm hand off: sensors trigger a hard safety interrupt while the allocator immediately redistributes remaining capacity so other chargers stay within a safe shared cap.",
     mediaNote:
       "Video demo of circuit and sensor response to heat/flame, INOVA 2026 Gold Medal photo, and system block diagram.",
-    imageSeeds: ["evcharge-circuit", "inova-gold-medal", "evcharge-block"],
+    mediaGuides: [
+      "Video/ảnh demo mạch & phản ứng cảm biến nhiệt/lửa.",
+      "Ảnh nhận huy chương vàng INOVA 2026.",
+      "Sơ đồ khối hệ thống EVCharge AI.",
+    ],
   },
   {
     id: "smart-heater",
@@ -155,7 +161,11 @@ export const projects: Project[] = [
       "Uneven heating and slow manual coordination across Bosworth residences pushed this project. LoRa with ESP32/Arduino was chosen for low-power coverage across boarding buildings where Wi-Fi is uneven. Hardware nodes publish control events over LoRa; a gateway bridges them into the web app so house parents can toggle circuits and students can submit heating requests in one workflow.",
     mediaNote:
       "Carousel: Arduino/ESP32 with LoRa module, House Parents and Student Request web UI, short clip of a web button switching a real circuit.",
-    imageSeeds: ["heater-lora-board", "heater-web-ui", "heater-relay-demo"],
+    mediaGuides: [
+      "Ảnh Arduino/ESP32 gắn module LoRa.",
+      "Screenshot giao diện web House Parents / Student Request.",
+      "Clip ngắn: bấm nút web điều khiển mạch thật.",
+    ],
   },
   {
     id: "epq-lighting",
@@ -177,7 +187,10 @@ export const projects: Project[] = [
     mediaNote:
       "Science Fair presentation photo at Bosworth plus a View 6,000-Word Dissertation (PDF) button.",
     dissertationCta: "View 6,000-Word Dissertation (PDF)",
-    imageSeeds: ["epq-science-fair", "epq-lighting-diagram"],
+    mediaGuides: [
+      "Ảnh trình bày Science Fair tại Bosworth.",
+      "Sơ đồ / biểu đồ so sánh LED vs đèn sợi đốt.",
+    ],
   },
   {
     id: "digital-library",
@@ -201,7 +214,10 @@ export const projects: Project[] = [
       "Digitising the library lets students search, borrow, and return books without paper friction, and designing the relational schema with a web front end taught me how authentication, inventory integrity, and simple UX have to ship together.",
     mediaNote:
       "Search/borrow web UI screenshot and database table schema diagram.",
-    imageSeeds: ["library-web-ui", "library-db-schema"],
+    mediaGuides: [
+      "Screenshot giao diện tìm / mượn sách.",
+      "Sơ đồ schema database thư viện.",
+    ],
   },
 ];
 
@@ -224,7 +240,11 @@ export const leadership = {
       "The knee-brace idea grew from watching football and training injuries where joint protection still needs freedom of movement. Winning 1st place at CATS UK hinged on the moment our financial model and pitch finally told one clear story: hardware that athletes would wear, priced and positioned for a real campus market.",
     mediaNote:
       "Slide deck or product design drawings, financial model visuals, and 1st-place award photo.",
-    imageSeeds: ["flexaid-brace", "flexaid-finance", "flexaid-award"],
+    mediaGuides: [
+      "Slide / bản vẽ thiết kế sản phẩm FlexAid.",
+      "Ảnh mô hình tài chính / go-to-market.",
+      "Ảnh nhận giải nhất CATS UK Business Incubator 2026.",
+    ],
   },
   uk: {
     title: "Bosworth Independent School (Northampton, UK)",

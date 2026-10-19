@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { TopChrome } from "@/components/layout/TopChrome";
 import { CopyEmailButton } from "@/components/shared/CopyEmailButton";
+import { MediaSlot } from "@/components/shared/MediaSlot";
 import { ProjectDetails } from "@/components/shared/ProjectDetails";
 import { YouTubeEmbed } from "@/components/shared/YouTubeEmbed";
 import {
@@ -74,12 +75,12 @@ export function BenBoxTheme() {
             </div>
           </Reveal>
 
-          <Reveal className={`${box} overflow-hidden`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={hero.portraitSrc}
+          <Reveal className={`${box} overflow-hidden p-3`}>
+            <MediaSlot
+              slotId="hero-portrait"
               alt={hero.portraitAlt}
-              className="h-full min-h-[340px] w-full object-cover"
+              guideline={hero.portraitGuideline}
+              frameClassName="h-full min-h-[340px] w-full"
             />
           </Reveal>
         </section>
@@ -112,15 +113,15 @@ export function BenBoxTheme() {
 
           <div className="mt-12 grid gap-10 lg:grid-cols-[2fr_3fr] lg:gap-16">
             <div className="space-y-4">
-              {about.images.map((image) => (
-                <Reveal key={image.src} className={`${box} group relative`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={image.src}
+              {about.images.map((image, idx) => (
+                <Reveal key={image.guideline} className={`${box} group p-3`}>
+                  <MediaSlot
+                    slotId={`about-${idx}`}
                     alt={image.alt}
-                    className="h-48 w-full object-cover"
+                    guideline={image.guideline}
+                    frameClassName="h-48 w-full"
                   />
-                  <p className="border-t border-zinc-300 px-3 py-2 text-xs text-zinc-600 dark:border-zinc-600 dark:text-zinc-300">
+                  <p className="mt-2 border-t border-zinc-300 pt-2 text-xs text-zinc-600 dark:border-zinc-600 dark:text-zinc-300">
                     {image.caption}
                   </p>
                 </Reveal>
@@ -244,15 +245,14 @@ export function BenBoxTheme() {
                 {leadership.featured.reflection}
               </p>
             </div>
-            <div className="grid gap-px bg-zinc-300 dark:bg-zinc-600">
-              {leadership.featured.imageSeeds.map((seed) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={seed}
-                  src={`https://picsum.photos/seed/${seed}/640/420`}
-                  alt={`${leadership.featured.title} media`}
-                  className="h-36 w-full bg-white object-cover dark:bg-zinc-900"
-                  loading="lazy"
+            <div className="space-y-3 bg-[#f7f8f6] p-3 dark:bg-zinc-950">
+              {leadership.featured.mediaGuides.map((guide, idx) => (
+                <MediaSlot
+                  key={guide}
+                  slotId={`leadership-featured-${idx}`}
+                  alt={`${leadership.featured.title} media ${idx + 1}`}
+                  guideline={guide}
+                  frameClassName="h-36 w-full border border-zinc-300 bg-white dark:border-zinc-600 dark:bg-zinc-900"
                 />
               ))}
             </div>

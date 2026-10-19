@@ -2,11 +2,34 @@
 
 import { ThemeProvider } from "next-themes";
 import { StyleTabProvider } from "@/components/providers/StyleTabProvider";
+import { MediaProvider } from "@/lib/media-context";
+import { ReviewFeedbackSystem } from "@holyann/web-text-review";
 
-export function AppProviders({ children }: { children: React.ReactNode }) {
+export function AppProviders({
+  children,
+  initialMedia,
+}: {
+  children: React.ReactNode;
+  initialMedia?: Record<string, string>;
+}) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <StyleTabProvider>{children}</StyleTabProvider>
+      <MediaProvider initialMedia={initialMedia}>
+        <StyleTabProvider>
+          {children}
+          <ReviewFeedbackSystem
+            config={{
+              projectName: "Quang Anh Portfolio Review Hub",
+              apiPath: "/api/reviews",
+              storageKey: "quanganh_reviewer_name",
+              primaryColor: "#0F766E",
+              accentColor: "#B45309",
+              enabled:
+                process.env.NEXT_PUBLIC_ENABLE_REVIEW !== "false",
+            }}
+          />
+        </StyleTabProvider>
+      </MediaProvider>
     </ThemeProvider>
   );
 }

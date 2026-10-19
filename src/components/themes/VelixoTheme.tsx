@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { TopChrome } from "@/components/layout/TopChrome";
 import { CopyEmailButton } from "@/components/shared/CopyEmailButton";
+import { MediaSlot } from "@/components/shared/MediaSlot";
 import { ProjectDetails } from "@/components/shared/ProjectDetails";
 import { YouTubeEmbed } from "@/components/shared/YouTubeEmbed";
 import {
@@ -90,12 +91,12 @@ export function VelixoTheme() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.08} className={`${glass} overflow-hidden`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={hero.portraitSrc}
+          <Reveal delay={0.08} className={`${glass} overflow-hidden p-3`}>
+            <MediaSlot
+              slotId="hero-portrait"
               alt={hero.portraitAlt}
-              className="h-full min-h-[340px] w-full object-cover"
+              guideline={hero.portraitGuideline}
+              frameClassName="h-full min-h-[340px] w-full rounded-xl"
             />
           </Reveal>
         </section>
@@ -125,18 +126,18 @@ export function VelixoTheme() {
             <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5">
               {about.images.map((image, idx) => (
                 <Reveal
-                  key={image.src}
-                  className={`${glass} group relative overflow-hidden ${idx === 0 ? "sm:col-span-2" : ""}`}
+                  key={image.guideline}
+                  className={`${glass} group overflow-hidden p-3 ${idx === 0 ? "sm:col-span-2" : ""}`}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={image.src}
+                  <MediaSlot
+                    slotId={`about-${idx}`}
                     alt={image.alt}
-                    className={`w-full object-cover ${idx === 0 ? "h-56" : "h-44"}`}
+                    guideline={image.guideline}
+                    frameClassName={`w-full rounded-xl ${idx === 0 ? "h-56" : "h-44"}`}
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-zinc-950/70 p-3 opacity-0 backdrop-blur transition group-hover:opacity-100">
-                    <p className="text-xs text-white">{image.caption}</p>
-                  </div>
+                  <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                    {image.caption}
+                  </p>
                 </Reveal>
               ))}
               <Reveal className={`${glass} p-5 sm:col-span-2`}>
@@ -236,14 +237,13 @@ export function VelixoTheme() {
               {leadership.featured.reflection}
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              {leadership.featured.imageSeeds.map((seed) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={seed}
-                  src={`https://picsum.photos/seed/${seed}/480/320`}
-                  alt={`${leadership.featured.title} media`}
-                  className="h-28 w-full rounded-2xl object-cover"
-                  loading="lazy"
+              {leadership.featured.mediaGuides.map((guide, idx) => (
+                <MediaSlot
+                  key={guide}
+                  slotId={`leadership-featured-${idx}`}
+                  alt={`${leadership.featured.title} media ${idx + 1}`}
+                  guideline={guide}
+                  frameClassName="h-28 w-full rounded-2xl"
                 />
               ))}
             </div>

@@ -1,0 +1,40 @@
+// Prisma schema — maps onto Supabase Postgres
+// After creating Supabase project, set DATABASE_URL + DIRECT_URL in .env.local
+// then run: npx prisma db push
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// Nhận xét review (bôi đen text trên web)
+model WebsiteReview {
+  id              String   @id @default(uuid()) @db.Uuid
+  pagePath        String   @map("page_path")
+  selectedText    String?  @map("selected_text")
+  elementContext  String?  @map("element_context")
+  comment         String
+  reviewerName    String   @default("Reviewer") @map("reviewer_name")
+  status          String   @default("pending")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([pagePath])
+  @@index([status])
+  @@map("website_reviews")
+}
+
+/// Media slots (ảnh / video) học viên upload theo slotId
+model ProjectMedia {
+  id        String   @id // slotId, e.g. "hero-portrait"
+  mediaUrl  String   @map("media_url")
+  mediaType String   @default("image") @map("media_type") // image | video
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("project_media")
+}

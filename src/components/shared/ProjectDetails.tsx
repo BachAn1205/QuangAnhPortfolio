@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import type { Project } from "@/data/content";
 import { site } from "@/data/content";
+import { MediaSlot } from "@/components/shared/MediaSlot";
 
 export function ProjectDetails({
   project,
@@ -84,18 +85,17 @@ export function ProjectDetails({
       </AnimatePresence>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {project.imageSeeds.map((seed) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={seed}
-            src={`https://picsum.photos/seed/${seed}/720/480`}
-            alt={`${project.title} media`}
-            className={
+        {project.mediaGuides.map((guide, idx) => (
+          <MediaSlot
+            key={`${project.id}-media-${idx}`}
+            slotId={`project-${project.id}-${idx}`}
+            alt={`${project.title} media ${idx + 1}`}
+            guideline={guide}
+            frameClassName={
               variant === "benbox"
-                ? "h-40 w-full border border-zinc-300 object-cover dark:border-zinc-600"
-                : "h-40 w-full rounded-2xl object-cover"
+                ? "h-40 w-full border border-zinc-300 dark:border-zinc-600"
+                : "h-40 w-full rounded-2xl"
             }
-            loading="lazy"
           />
         ))}
       </div>

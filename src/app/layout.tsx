@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { fetchDatabaseMedia } from "@/lib/get-db-media";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -19,7 +20,9 @@ export const metadata: Metadata = {
     "Personal engineering and entrepreneurship portfolio: hardware prototyping, commercial ventures, and community leadership.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const initialMedia = await fetchDatabaseMedia();
+
   return (
     <html
       lang="en"
@@ -27,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${outfit.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans">
-        <AppProviders>{children}</AppProviders>
+        <AppProviders initialMedia={initialMedia}>{children}</AppProviders>
       </body>
     </html>
   );
