@@ -1,0 +1,58 @@
+"use client";
+
+import { MediaSlot } from "@/components/shared/MediaSlot";
+import { Reveal } from "@/components/velixo/Reveal";
+import { glass } from "@/components/velixo/styles";
+import { about } from "@/data/content";
+
+export function AboutPage() {
+  return (
+    <section>
+      <Reveal>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">
+          {about.eyebrow}
+        </p>
+        <h1 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+          {about.heading}
+        </h1>
+      </Reveal>
+
+      <div className="mt-8 grid gap-5 lg:grid-cols-12">
+        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5">
+          {about.images.map((image, idx) => (
+            <Reveal
+              key={image.guideline}
+              className={`${glass} group overflow-hidden p-3 ${idx === 0 ? "sm:col-span-2" : ""}`}
+            >
+              <MediaSlot
+                slotId={`about-${idx}`}
+                alt={image.alt}
+                guideline={image.guideline}
+                frameClassName={`w-full rounded-xl ${idx === 0 ? "h-56" : "h-44"}`}
+              />
+              <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                {image.caption}
+              </p>
+            </Reveal>
+          ))}
+          <Reveal className={`${glass} p-5 sm:col-span-2`}>
+            <p className="text-sm font-semibold">Quick Facts</p>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">
+              {about.quickFacts.map((fact) => (
+                <li key={fact}>{fact}</li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+
+        <Reveal className={`${glass} p-7 lg:col-span-7`}>
+          <div className="space-y-4 text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
+            {about.paragraphs.map((p) => (
+              <p key={p.slice(0, 40)}>{p}</p>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

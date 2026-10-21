@@ -1,7 +1,7 @@
 "use client";
 
 import { CaretDown } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import type { Project } from "@/data/content";
 import { site } from "@/data/content";
@@ -15,7 +15,6 @@ export function ProjectDetails({
   variant: "gridly" | "velixo" | "benbox";
 }) {
   const [open, setOpen] = useState(false);
-  const reduce = useReducedMotion();
 
   const panel =
     variant === "velixo"
@@ -70,9 +69,9 @@ export function ProjectDetails({
       <AnimatePresence initial={false}>
         {open ? (
           <motion.div
-            initial={reduce ? false : { opacity: 0, height: 0 }}
+            initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            exit={reduce ? undefined : { opacity: 0, height: 0 }}
+            exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden"
           >
             <div className={panel}>

@@ -6,11 +6,11 @@ export const site = {
   linkedIn: "https://www.linkedin.com/",
   github: "https://github.com/",
   nav: [
-    { label: "About", href: "#about" },
-    { label: "Engineering Projects", href: "#projects" },
-    { label: "Venture & Leadership", href: "#leadership" },
-    { label: "Broadcasting", href: "#broadcasting" },
-    { label: "Credentials", href: "#credentials" },
+    { label: "About", href: "/about" },
+    { label: "Engineering Projects", href: "/projects" },
+    { label: "Venture & Leadership", href: "/leadership" },
+    { label: "Broadcasting", href: "/broadcasting" },
+    { label: "Credentials", href: "/credentials" },
   ],
   ctaDownload: "Download CV (PDF)",
 } as const;
@@ -20,7 +20,7 @@ export const hero = {
   tagline:
     "An Embedded Systems Maker, Tech Entrepreneur, and Community Leader based between Northampton, UK and Hanoi, Vietnam. The thread between the circuits I solder and the ventures I launch is the same: electrical and electronic engineering that solves tangible problems for real people.",
   ctaPrimary: "Explore Engineering Projects",
-  ctaPrimaryHref: "#projects",
+  ctaPrimaryHref: "/projects",
   ctaSecondary: "Get in Touch",
   ctaSecondaryHref: "#contact",
   portraitAlt:
@@ -85,9 +85,25 @@ export const about = {
   ],
 } as const;
 
+export const projectsSection = {
+  eyebrow: "02 / HARDWARE, SOFTWARE & RESEARCH",
+  heading: "Engineering Projects & Scientific Investigation",
+  lead: "From embedded safety circuits to campus IoT and 6,000-word technical research: systems I design, build, and defend end-to-end.",
+  capabilities: [
+    { label: "Embedded Systems", detail: "ESP32 / Arduino / sensors" },
+    { label: "Campus IoT", detail: "LoRa + web control stack" },
+    { label: "AI on Hardware", detail: "Load allocation & forecasting" },
+    { label: "Technical Research", detail: "EPQ Grade A (49/54)" },
+    { label: "Full-stack Apps", detail: "Python / SQL / JS" },
+  ],
+} as const;
+
 export type Project = {
   id: string;
   title: string;
+  highlight: string;
+  domain: string;
+  featured?: boolean;
   awardBadge?: string;
   gradeBadge?: string;
   role: string;
@@ -103,16 +119,15 @@ export type Project = {
   mediaGuides: string[];
 };
 
-export const projectsSection = {
-  eyebrow: "02 / HARDWARE, SOFTWARE & RESEARCH",
-  heading: "Engineering Projects & Scientific Investigation",
-} as const;
-
 export const projects: Project[] = [
   {
     id: "evcharge-ai",
     title:
       "EVCharge AI: Solar-Powered Smart EV Charging Station",
+    highlight:
+      "International gold-medal hardware: solar EV charging with sensor-grade safety and AI power allocation.",
+    domain: "Embedded + AI",
+    featured: true,
     awardBadge:
       "Gold Medal: 50th International Invention Show (INOVA 2026)",
     role: "Embedded Systems Developer",
@@ -142,6 +157,9 @@ export const projects: Project[] = [
   {
     id: "smart-heater",
     title: "Smart Heater Control System (Campus IoT)",
+    highlight:
+      "End-to-end campus IoT: LoRa hardware nodes bridged to a live web control app for boarding houses.",
+    domain: "IoT Systems",
     role: "Independent Project Lead & Systems Developer",
     organization: "Bosworth Independent School",
     timeline: "Oct 2026 - Present",
@@ -171,6 +189,9 @@ export const projects: Project[] = [
     id: "epq-lighting",
     title:
       "Extended Project Qualification (EPQ): Solid-State vs. Incandescent Lighting",
+    highlight:
+      "6,000-word lighting study defended at Grade A, turned into a classroom concentration proposal.",
+    domain: "Research",
     gradeBadge: "Grade Achieved: A (49/54)",
     role: "Independent Researcher",
     organization: "Bosworth Independent School",
@@ -195,6 +216,9 @@ export const projects: Project[] = [
   {
     id: "digital-library",
     title: "Digital Library Management System",
+    highlight:
+      "Relational database + web app that digitised school library borrowing for real students.",
+    domain: "Software",
     role: "Project Initiator & Developer",
     organization: "Bosworth Independent School",
     timeline: "May 2026 - Present",
@@ -406,11 +430,3 @@ export const footer = {
   copyEmail: "Copy email",
   copied: "Copied",
 } as const;
-
-export const styleTabs = [
-  { id: "gridly", label: "Gridly Style" },
-  { id: "velixo", label: "Velixo Style" },
-  { id: "benbox", label: "BenBox Style" },
-] as const;
-
-export type StyleTabId = (typeof styleTabs)[number]["id"];
