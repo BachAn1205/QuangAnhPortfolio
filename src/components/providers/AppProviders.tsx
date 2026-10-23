@@ -21,7 +21,7 @@ export function AppProviders({
             apiPath: "/api/reviews",
             storageKey: "quanganh_reviewer_name",
             primaryColor: "#0F766E",
-            accentColor: "#B45309",
+            accentColor: "#115E59",
             enabled: process.env.NEXT_PUBLIC_ENABLE_REVIEW !== "false",
           }}
         />

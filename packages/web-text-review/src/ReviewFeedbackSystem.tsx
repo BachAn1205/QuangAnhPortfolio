@@ -416,9 +416,6 @@ Hãy tìm file mã nguồn tương ứng và sửa lại theo đúng yêu cầu 
   });
 
   const pendingCount = reviews.filter((r) => r.status === "pending").length;
-  const currentPendingCount = reviews.filter(
-    (r) => r.page_path === pathname && r.status === "pending"
-  ).length;
 
   if (!cfg.enabled) return null;
 
@@ -551,30 +548,21 @@ Hãy tìm file mã nguồn tương ứng và sửa lại theo đúng yêu cầu 
       )}
 
       {/* ─── FLOATING REVIEW BADGE / LAUNCHER (GÓC DƯỚI BÊN PHẢI) ─────── */}
-      <div className="print:hidden fixed bottom-6 right-6 z-[9980] flex items-center gap-2">
+      <div className="print:hidden fixed bottom-4 right-4 z-[40]">
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Mở bảng nhận xét"
+          title="Review Mode"
           style={{ backgroundColor: primary }}
-          className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full text-white shadow-2xl border border-white/20 hover:opacity-90 hover:scale-105 transition-all duration-200 cursor-pointer"
+          className="relative flex h-12 w-12 items-center justify-center rounded-full text-white border border-white/20 hover:opacity-90 transition-opacity duration-200 cursor-pointer"
         >
-          <div className="relative">
-            <MessageSquare className="w-4 h-4 text-[#FAF7F2]" />
-            {pendingCount > 0 && (
-              <span
-                style={{ backgroundColor: accent }}
-                className="absolute -top-2 -right-2 w-4 h-4 rounded-full text-white text-[9px] font-bold flex items-center justify-center shadow-xs"
-              >
-                {pendingCount}
-              </span>
-            )}
-          </div>
-          <span className="text-xs font-semibold tracking-wide hidden sm:inline">
-            Review Mode
-          </span>
-          {currentPendingCount > 0 && (
-            <span className="px-2 py-0.5 rounded-full bg-white/20 text-[#FAF7F2] text-[10px] font-mono font-bold">
-              Trang này ({currentPendingCount})
+          <MessageSquare className="w-5 h-5 text-[#FAF7F2]" />
+          {pendingCount > 0 && (
+            <span
+              style={{ backgroundColor: accent }}
+              className="absolute -top-1 -right-1 min-w-4 h-4 px-1 rounded-full text-white text-[9px] font-bold flex items-center justify-center"
+            >
+              {pendingCount}
             </span>
           )}
         </button>

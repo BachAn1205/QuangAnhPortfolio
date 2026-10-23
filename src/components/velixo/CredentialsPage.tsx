@@ -8,10 +8,7 @@ export function CredentialsPage() {
   return (
     <section>
       <Reveal>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">
-          {credentials.eyebrow}
-        </p>
-        <h1 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
           {credentials.heading}
         </h1>
       </Reveal>

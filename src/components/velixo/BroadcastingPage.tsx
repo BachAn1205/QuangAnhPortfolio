@@ -9,10 +9,7 @@ export function BroadcastingPage() {
   return (
     <section>
       <Reveal>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">
-          {broadcasting.eyebrow}
-        </p>
-        <h1 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
           {broadcasting.heading}
         </h1>
       </Reveal>
@@ -59,7 +56,7 @@ export function BroadcastingPage() {
           >
             <div className="mb-3 flex items-center justify-between gap-2">
               <p className="text-sm font-semibold">{video.title}</p>
-              <span className="rounded-full border border-rose-300/30 bg-rose-400/10 px-2.5 py-1 text-[11px] font-semibold text-rose-700 dark:text-rose-300">
+              <span className="rounded-full border border-teal-700/25 bg-teal-700/10 px-2.5 py-1 text-[11px] font-semibold text-teal-900 dark:border-teal-300/25 dark:text-teal-100">
                 {video.badge}
               </span>
             </div>

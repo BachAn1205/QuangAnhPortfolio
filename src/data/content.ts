@@ -18,7 +18,9 @@ export const site = {
 export const hero = {
   headline: "Hi, I'm Quang Anh.",
   tagline:
-    "An Embedded Systems Maker, Tech Entrepreneur, and Community Leader based between Northampton, UK and Hanoi, Vietnam. The thread between the circuits I solder and the ventures I launch is the same: electrical and electronic engineering that solves tangible problems for real people.",
+    "An Electronics Developer, Engineering Researcher, and Community Leader driven by a passion for solving real-world challenges through technology.",
+  support:
+    "My projects share a common goal: using electrical and electronic engineering to solve practical problems, particularly in energy efficiency and power consumption.",
   ctaPrimary: "Explore Engineering Projects",
   ctaPrimaryHref: "/projects",
   ctaSecondary: "Get in Touch",
@@ -52,12 +54,11 @@ export const hero = {
 } as const;
 
 export const about = {
-  eyebrow: "01 / MY STORY",
   heading: "Bridging the Lab Bench and the Real World",
   paragraphs: [
-    "Moving from the High School for Gifted Students at Hanoi National University of Education to Bosworth Independent School in the UK sharpened my love of mathematics and physics into something more concrete. Self-studying circuit fundamentals with Giorgio Rizzoni, and building electronics projects that either worked or failed in my hands, made Electrical and Electronic Engineering feel less like a subject and more like a language I wanted to speak fluently.",
-    "I keep pushing engineering toward applied products: a campus heater control system for Bosworth residences, hardware that leaves the bench for invention shows and incubator pitches. Commercial constraints and user experience are not extras for me; they decide whether a circuit stays a prototype or becomes something people actually rely on.",
-    "Away from the breadboard I am a football thinker, a residential peer at Delapré House, and a livestream host who breaks down match tactics on camera. Reading the field, coordinating people, and running tournaments train the same systems instinct I use when designing hardware: define the goal, model the constraints, then keep the whole network stable under pressure.",
+    "Maths and Physics have always been my favourite subjects since I studied in Vietnam. That was also when I started loving engineering. In Vietnam, I was infused with the world of theoretical physics; whereas, in the UK, I had an opportunity to apply the knowledge into real-life products and research papers. The spark on Electrical and Electronic Engineering was on when I was watching about the history of a blue LED and how it changed the whole world. I was amazed at such a big impact of an object whose size is less than a human hand.",
+    "For me, engineering is a bridge between theory and practices. Theory will be useless if it cannot apply to human life under any form. The main purpose of researching is still human life. Therefore, user experience must be one of the top priorities when designing a new product.",
+    "Leaving the circuits and wires, I still connect, but instead of electricity, I connect humans. In the sport field, I am a midfielder connecting between the defensive players and attackers. In the boarding house, I am a catalyst, who came up with new ideas to get boarders involved. In front of the camera, I was a streamer connecting emotions with viewers.",
   ],
   images: [
     {
@@ -86,9 +87,8 @@ export const about = {
 } as const;
 
 export const projectsSection = {
-  eyebrow: "02 / HARDWARE, SOFTWARE & RESEARCH",
   heading: "Engineering Projects & Scientific Investigation",
-  lead: "From embedded safety circuits to campus IoT and 6,000-word technical research: systems I design, build, and defend end-to-end.",
+  lead: "Using electrical and electronic engineering to solve practical problems, particularly in energy efficiency and power consumption.",
   capabilities: [
     { label: "Embedded Systems", detail: "ESP32 / Arduino / sensors" },
     { label: "Campus IoT", detail: "LoRa + web control stack" },
@@ -114,7 +114,6 @@ export type Project = {
   dissertationTitle?: string;
   behindTheScenes: string;
   mediaNote: string;
-  dissertationCta?: string;
   /** Hướng dẫn từng ô upload (không dùng ảnh mẫu) */
   mediaGuides: string[];
 };
@@ -125,7 +124,7 @@ export const projects: Project[] = [
     title:
       "EVCharge AI: Solar-Powered Smart EV Charging Station",
     highlight:
-      "International gold-medal hardware: solar EV charging with sensor-grade safety and AI power allocation.",
+      "The project aims to create a sustainable and safe charging station powered by solar energy.",
     domain: "Embedded + AI",
     featured: true,
     awardBadge:
@@ -143,9 +142,13 @@ export const projects: Project[] = [
       "Built a smart electric vehicle charging prototype powered by solar energy to shave peak grid loads and optimize charging completion.",
       "Programmed and assembled hardware protection circuits using ESP32 and Arduino microcontrollers integrated with thermal, humidity, and flame sensors to prevent charger overheating and fire hazards.",
       "Implemented AI algorithms to forecast grid demand and dynamically allocate shared power caps.",
+      "Vietnam had 374,816 EVs up to May 2026 (369,849 electric passenger cars, 3,396 electric trucks, and 1,571 electric buses), projected to reach 1 million electric vehicles (not motorbikes) by 2030.",
+      "If 100,000 vehicles used 60-120 kW fast chargers at the same time, that could create an instantaneous load of 6-12 GW, a significant fraction of the national peak. Concentrated demand, rather than total energy consumed, pressures local grid infrastructure.",
+      "A smart charging system should decide which car is prioritized, how much energy each vehicle receives, and within what time frame, given the current grid load, local distribution limits, and each vehicle's requirements.",
+      "Process: research and raise ideas; discuss and choose a main idea; sketch a block diagram and assign hardware, software, and AI. Software builds an app linked to a database and server. Hardware uses C/C++ in the Arduino IDE for sensors and the microcontroller. AI and machine learning divide power for each car. Then testing and evaluation.",
     ],
     behindTheScenes:
-      "The hardest part was keeping thermal, humidity, and flame sensors in sync on a shared ESP32/Arduino protection bus without false trips. When load risk rises, the cut-off circuit and the power-allocation algorithm hand off: sensors trigger a hard safety interrupt while the allocator immediately redistributes remaining capacity so other chargers stay within a safe shared cap.",
+      "The most challenging part of integrating the sensors was ensuring that all the components worked together as a cohesive system rather than as independent units. I had to consider different scenarios. What will happen if the fire sensors detect fire? How should the system react when the temperature is too high? Answering these questions forced me to connect the components carefully, ensuring that each component not only functioned independently but also contributed effectively to the overall system.",
     mediaNote:
       "Video demo of circuit and sensor response to heat/flame, INOVA 2026 Gold Medal photo, and system block diagram.",
     mediaGuides: [
@@ -158,7 +161,7 @@ export const projects: Project[] = [
     id: "smart-heater",
     title: "Smart Heater Control System (Campus IoT)",
     highlight:
-      "End-to-end campus IoT: LoRa hardware nodes bridged to a live web control app for boarding houses.",
+      "The system aims to decrease the power consumption of heaters in the boarding houses.",
     domain: "IoT Systems",
     role: "Independent Project Lead & Systems Developer",
     organization: "Bosworth Independent School",
@@ -174,9 +177,11 @@ export const projects: Project[] = [
     overview: [
       "Designed and assembled a hardware control system using Arduino, ESP32, and LoRa Modules.",
       "Developed a functional web application using Python, JavaScript, CSS, and HTML enabling house parents to turn heaters on and off remotely and allowing students to submit heating requests.",
+      "The system aims to decrease the power consumption of heaters in the boarding houses.",
+      "Steps: define the scope and the problem area; sketch the system flowchart and block diagrams; vibe-coded the app; programmed sensors and microcontrollers (LoRa modules); testing and evaluation.",
     ],
     behindTheScenes:
-      "Uneven heating and slow manual coordination across Bosworth residences pushed this project. LoRa with ESP32/Arduino was chosen for low-power coverage across boarding buildings where Wi-Fi is uneven. Hardware nodes publish control events over LoRa; a gateway bridges them into the web app so house parents can toggle circuits and students can submit heating requests in one workflow.",
+      "The project was motivated by my personal experience with the heaters in my room. During fall, there were days I felt cold and wanted to turn on my heater, but I cannot turn on the heater by myself without permission in the main building. This inconvenience inspired me to develop a more efficient control system that could simplify the process and automate the heater's operation based on environmental conditions, reducing reliance on humans.",
     mediaNote:
       "Carousel: Arduino/ESP32 with LoRa module, House Parents and Student Request web UI, short clip of a web button switching a real circuit.",
     mediaGuides: [
@@ -190,7 +195,7 @@ export const projects: Project[] = [
     title:
       "Extended Project Qualification (EPQ): Solid-State vs. Incandescent Lighting",
     highlight:
-      "6,000-word lighting study defended at Grade A, turned into a classroom concentration proposal.",
+      "The project aims to compare efficiency, colour rendering, and reliability of LEDs and incandescent bulbs as a basis for further work on both efficiency and colour quality.",
     domain: "Research",
     gradeBadge: "Grade Achieved: A (49/54)",
     role: "Independent Researcher",
@@ -202,12 +207,13 @@ export const projects: Project[] = [
     overview: [
       "Authored and defended a 6,000-word independent technical dissertation evaluating luminous efficacy, spectral colour rendering, and component reliability.",
       "Presented findings at the school science fair, proposing an optimized classroom lighting solution to enhance student concentration.",
+      "The project aims to make an overall comparison between efficiency, colour rendering and reliability of LEDs and incandescent light bulbs, making the fundamentals for further research focused on improving both the efficiency and colour quality of LEDs.",
+      "Steps: choose the format and project scope; plan and manage the project; conduct research (literature review, analysis, evaluation); write and evaluate.",
     ],
     behindTheScenes:
-      "The sharpest finding after 6,000 words was that luminous efficacy alone does not decide classroom quality; spectral colour rendering shapes comfort and focus just as much. The science-fair proposal used higher-CRI LED spectra tuned for daytime classrooms so students get brighter usable light with less glare and heat, supporting sustained concentration.",
+      "One of the most fascinating and surprising insights is actually not in the report: Psychology of Light. Human eyes take yellowish light as relaxing and resting, whereas white light is considered as productive and working. That fact led me to propose an idea of changing all the light bulbs in tables in boarding rooms as LEDs for students to study, and in the ceiling as yellow for relaxation.",
     mediaNote:
-      "Science Fair presentation photo at Bosworth plus a View 6,000-Word Dissertation (PDF) button.",
-    dissertationCta: "View 6,000-Word Dissertation (PDF)",
+      "Science Fair presentation photo at Bosworth, and a comparison diagram of LED and incandescent lighting.",
     mediaGuides: [
       "Ảnh trình bày Science Fair tại Bosworth.",
       "Sơ đồ / biểu đồ so sánh LED vs đèn sợi đốt.",
@@ -217,7 +223,7 @@ export const projects: Project[] = [
     id: "digital-library",
     title: "Digital Library Management System",
     highlight:
-      "Relational database + web app that digitised school library borrowing for real students.",
+      "The project aims to digitalize borrowing, returning, and searching so more students use the library as a quiet place to study and read.",
     domain: "Software",
     role: "Project Initiator & Developer",
     organization: "Bosworth Independent School",
@@ -233,9 +239,11 @@ export const projects: Project[] = [
       "Designed and implemented a relational database architecture for book inventory and user authentication.",
       "Co-programmed a functional web application using Python, JavaScript, and HTML enabling students to search catalogs, borrow, and return books.",
       "Collaborated with the Student Council Environment Committee to digitize records and manually migrate library data.",
+      "It started with a request from a member in my school house, Bobby, who wanted a quiet place to sleep and do work during lunch time. The library was messy, and borrowing and returning were outdated.",
+      "Steps: define goals; sketch plans and assign software, cleaning, and talking to teachers; clean the library, collect book information, and create the database; build the website and integrate the database; testing and evaluation.",
     ],
     behindTheScenes:
-      "Digitising the library lets students search, borrow, and return books without paper friction, and designing the relational schema with a web front end taught me how authentication, inventory integrity, and simple UX have to ship together.",
+      "Digitalizing the process and refurbishing the library connects students with the library, creating a quiet and relaxed space. More students went to the library during break and lunch time for a nap or popped in to borrow a book. For myself, after doing the project, I knew how to take data from real life, build a database from there, and integrate into a website.",
     mediaNote:
       "Search/borrow web UI screenshot and database table schema diagram.",
     mediaGuides: [
@@ -246,7 +254,6 @@ export const projects: Project[] = [
 ];
 
 export const leadership = {
-  eyebrow: "03 / ENTREPRENEURSHIP & COMMUNITY IMPACT",
   heading: "Venture Creation & Leadership",
   featured: {
     title: "FlexAid",
@@ -330,7 +337,6 @@ export const leadership = {
 } as const;
 
 export const broadcasting = {
-  eyebrow: "04 / DIGITAL MEDIA & PUBLIC SPEAKING",
   heading: "Sports Tactical Analysis & Live Broadcasting",
   online: {
     name: "Huấn Luyện Viên Online",
@@ -372,7 +378,6 @@ export const broadcasting = {
 } as const;
 
 export const credentials = {
-  eyebrow: "05 / ACADEMIC CREDENTIALS & TOOLKIT",
   heading: "Education, Honors & Technical Skills",
   education: [
     {
@@ -420,13 +425,13 @@ export const credentials = {
 
 export const footer = {
   closing:
-    "I am preparing university applications in Electrical and Electronic Engineering and welcome conversations with professors, admissions committees, and fellow hardware builders.",
+    "If you would like to talk about an electrical or electronic engineering project, please email me.",
   emailLabel: "Email",
   locationLabel: "Location",
   linksLabel: "Links",
   linkedIn: "LinkedIn",
   github: "GitHub",
-  resume: "Download Resume (PDF)",
+  resume: "Download CV (PDF)",
   copyEmail: "Copy email",
   copied: "Copied",
 } as const;

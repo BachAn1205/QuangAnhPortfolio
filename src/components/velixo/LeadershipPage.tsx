@@ -9,19 +9,13 @@ export function LeadershipPage() {
   return (
     <section>
       <Reveal>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">
-          {leadership.eyebrow}
-        </p>
-        <h1 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
           {leadership.heading}
         </h1>
       </Reveal>
 
       <Reveal className={`${glass} mt-8 p-6 md:p-8`}>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">
-          Featured Venture Spotlight
-        </p>
-        <h2 className="mt-2 text-3xl font-semibold">
+        <h2 className="text-3xl font-semibold">
           {leadership.featured.title}
         </h2>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">

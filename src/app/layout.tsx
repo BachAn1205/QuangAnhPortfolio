@@ -14,10 +14,25 @@ const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Quang Anh | Engineering & Entrepreneurship Portfolio",
   description:
     "Personal engineering and entrepreneurship portfolio: hardware prototyping, commercial ventures, and community leadership.",
+  openGraph: {
+    title: "Quang Anh | Engineering & Entrepreneurship Portfolio",
+    description:
+      "Electronics, research, and community leadership.",
+    type: "website",
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

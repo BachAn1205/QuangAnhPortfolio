@@ -1,10 +1,8 @@
 "use client";
 
 import { CaretDown } from "@phosphor-icons/react";
-import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import type { Project } from "@/data/content";
-import { site } from "@/data/content";
 import { MediaSlot } from "@/components/shared/MediaSlot";
 
 export function ProjectDetails({
@@ -66,22 +64,13 @@ export function ProjectDetails({
         />
       </button>
 
-      <AnimatePresence initial={false}>
-        {open ? (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden"
-          >
-            <div className={panel}>
-              <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
-                {project.behindTheScenes}
-              </p>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {open ? (
+        <div className={`qa-log ${panel}`}>
+          <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
+            {project.behindTheScenes}
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid gap-3 sm:grid-cols-2">
         {project.mediaGuides.map((guide, idx) => (
@@ -102,15 +91,6 @@ export function ProjectDetails({
       <p className="text-xs text-zinc-500 dark:text-zinc-400">
         {project.mediaNote}
       </p>
-
-      {project.dissertationCta ? (
-        <a
-          href={site.cvUrl}
-          className="inline-flex text-sm font-semibold text-teal-800 underline-offset-4 hover:underline dark:text-teal-300"
-        >
-          {project.dissertationCta}
-        </a>
-      ) : null}
     </div>
   );
 }

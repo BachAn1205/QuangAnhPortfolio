@@ -4,7 +4,7 @@ export function CircuitBackground() {
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(13,148,136,0.08),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(37,99,235,0.06),transparent_35%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(45,212,191,0.08),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.07),transparent_35%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(13,148,136,0.08),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(15,118,110,0.05),transparent_35%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(45,212,191,0.08),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(15,118,110,0.08),transparent_35%)]" />
       <div
         className="absolute inset-0 opacity-[0.35] dark:opacity-[0.45]"
         style={{
@@ -41,13 +41,13 @@ export function CircuitBackground() {
               cx="70"
               cy="20"
               r="2.5"
-              className="fill-slate-500/70 dark:fill-sky-300/60"
+              className="fill-slate-500/70 dark:fill-teal-300/60"
             />
             <circle
               cx="70"
               cy="100"
               r="2.5"
-              className="fill-slate-500/70 dark:fill-sky-300/60"
+              className="fill-slate-500/70 dark:fill-teal-300/60"
             />
           </pattern>
         </defs>
