@@ -60,15 +60,15 @@ export function MediaSlot({
   };
 
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
+    <div className={`flex h-full min-h-0 flex-col gap-2 ${className}`}>
       <div
-        className={`relative overflow-hidden bg-zinc-100 dark:bg-zinc-900/80 ${frameClassName}`}
+        className={`relative min-h-[8rem] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900/80 ${frameClassName}`}
       >
         {hasMedia && current ? (
           video ? (
             <video
               src={current}
-              className="h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
               controls
               playsInline
               preload="metadata"
@@ -78,7 +78,7 @@ export function MediaSlot({
             <img
               src={current}
               alt={alt}
-              className="h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"
             />
           )
@@ -87,7 +87,7 @@ export function MediaSlot({
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={uploading}
-            className="flex h-full min-h-[8rem] w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-zinc-300 bg-zinc-50 px-4 py-6 text-center transition hover:border-teal-600 hover:bg-teal-50/40 dark:border-zinc-600 dark:bg-zinc-900/40 dark:hover:border-teal-400 dark:hover:bg-teal-950/20"
+            className="absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-zinc-300 bg-zinc-50 px-4 py-6 text-center transition hover:border-teal-600 hover:bg-teal-50/40 dark:border-zinc-600 dark:bg-zinc-900/40 dark:hover:border-teal-400 dark:hover:bg-teal-950/20"
           >
             {uploading ? (
               <SpinnerGap

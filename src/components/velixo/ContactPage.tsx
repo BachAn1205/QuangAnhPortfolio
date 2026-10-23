@@ -88,12 +88,16 @@ export function ContactPage() {
           </ul>
         </Reveal>
 
-        <Reveal delay={0.08} className={`${glass} overflow-hidden p-3`}>
+        <Reveal
+          delay={0.08}
+          className={`${glass} flex h-full min-h-0 flex-col overflow-hidden p-3`}
+        >
           <MediaSlot
             slotId="contact-portrait"
             alt={contact.photoAlt}
             guideline={contact.photoGuideline}
-            frameClassName="h-full min-h-[340px] w-full rounded-xl"
+            className="min-h-0 flex-1"
+            frameClassName="min-h-[16rem] w-full flex-1 rounded-xl"
           />
         </Reveal>
       </div>
