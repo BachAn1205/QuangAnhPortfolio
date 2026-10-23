@@ -1,22 +1,24 @@
 export const site = {
-  fullName: "Quang Anh",
-  email: "quanganh.portfolio@gmail.com",
+  fullName: "Nguyen Quang Anh",
+  email: "nquanganh08@gmail.com",
+  phone: "+44 7428925081",
+  phoneHref: "tel:+447428925081",
   location: "Northampton, UK | Hanoi, Vietnam",
   cvUrl: "/QuangAnh-CV.pdf",
   linkedIn: "https://www.linkedin.com/",
-  github: "https://github.com/",
+  github: "https://github.com/nquanganh08-svg",
   nav: [
-    { label: "About", href: "/about" },
+    { label: "About", href: "/" },
     { label: "Engineering Projects", href: "/projects" },
     { label: "Venture & Leadership", href: "/leadership" },
     { label: "Broadcasting", href: "/broadcasting" },
-    { label: "Credentials", href: "/credentials" },
+    { label: "Contact", href: "/contact" },
   ],
   ctaDownload: "Download CV (PDF)",
 } as const;
 
 export const hero = {
-  headline: "Hi, I'm Quang Anh.",
+  headline: "Hi, I'm Nguyen Quang Anh.",
   tagline:
     "An Electronics Developer, Engineering Researcher, and Community Leader driven by a passion for solving real-world challenges through technology.",
   support:
@@ -24,7 +26,7 @@ export const hero = {
   ctaPrimary: "Explore Engineering Projects",
   ctaPrimaryHref: "/projects",
   ctaSecondary: "Get in Touch",
-  ctaSecondaryHref: "#contact",
+  ctaSecondaryHref: "/contact",
   portraitAlt:
     "Quang Anh working with electronic circuits and presenting engineering work",
   portraitGuideline:
@@ -78,24 +80,11 @@ export const about = {
       guideline: "Ảnh hoạt động thể thao hoặc đang host chương trình / livestream.",
     },
   ],
-  quickFacts: [
-    "A-Level candidate (Year 13), Bosworth Independent School",
-    "Predicted A*A*A*A* in Maths, Further Maths, CS, Physics",
-    "SAT 1540 | IELTS Academic 8.0",
-    "Frank Dickens Full-Tuition Scholar (2025-2027)",
-  ],
 } as const;
 
 export const projectsSection = {
   heading: "Engineering Projects & Scientific Investigation",
   lead: "Using electrical and electronic engineering to solve practical problems, particularly in energy efficiency and power consumption.",
-  capabilities: [
-    { label: "Embedded Systems", detail: "ESP32 / Arduino / sensors" },
-    { label: "Campus IoT", detail: "LoRa + web control stack" },
-    { label: "AI on Hardware", detail: "Load allocation & forecasting" },
-    { label: "Technical Research", detail: "EPQ Grade A (49/54)" },
-    { label: "Full-stack Apps", detail: "Python / SQL / JS" },
-  ],
 } as const;
 
 export type Project = {
@@ -111,6 +100,8 @@ export type Project = {
   timeline: string;
   techStack: string[];
   overview: string[];
+  /** Các bước thực hiện, vẽ thành sơ đồ quy trình */
+  process: { title: string; detail?: string }[];
   dissertationTitle?: string;
   behindTheScenes: string;
   mediaNote: string;
@@ -145,7 +136,20 @@ export const projects: Project[] = [
       "Vietnam had 374,816 EVs up to May 2026 (369,849 electric passenger cars, 3,396 electric trucks, and 1,571 electric buses), projected to reach 1 million electric vehicles (not motorbikes) by 2030.",
       "If 100,000 vehicles used 60-120 kW fast chargers at the same time, that could create an instantaneous load of 6-12 GW, a significant fraction of the national peak. Concentrated demand, rather than total energy consumed, pressures local grid infrastructure.",
       "A smart charging system should decide which car is prioritized, how much energy each vehicle receives, and within what time frame, given the current grid load, local distribution limits, and each vehicle's requirements.",
-      "Process: research and raise ideas; discuss and choose a main idea; sketch a block diagram and assign hardware, software, and AI. Software builds an app linked to a database and server. Hardware uses C/C++ in the Arduino IDE for sensors and the microcontroller. AI and machine learning divide power for each car. Then testing and evaluation.",
+    ],
+    process: [
+      { title: "Research and raise ideas" },
+      { title: "Discuss and choose a main idea" },
+      {
+        title: "Sketch the block diagram",
+        detail: "Assign hardware, software, and AI.",
+      },
+      {
+        title: "Build in parallel",
+        detail:
+          "Software: app linked to a database and server. Hardware: C/C++ in the Arduino IDE for sensors and the microcontroller. AI: machine learning divides power for each car.",
+      },
+      { title: "Testing and evaluation" },
     ],
     behindTheScenes:
       "The most challenging part of integrating the sensors was ensuring that all the components worked together as a cohesive system rather than as independent units. I had to consider different scenarios. What will happen if the fire sensors detect fire? How should the system react when the temperature is too high? Answering these questions forced me to connect the components carefully, ensuring that each component not only functioned independently but also contributed effectively to the overall system.",
@@ -178,7 +182,16 @@ export const projects: Project[] = [
       "Designed and assembled a hardware control system using Arduino, ESP32, and LoRa Modules.",
       "Developed a functional web application using Python, JavaScript, CSS, and HTML enabling house parents to turn heaters on and off remotely and allowing students to submit heating requests.",
       "The system aims to decrease the power consumption of heaters in the boarding houses.",
-      "Steps: define the scope and the problem area; sketch the system flowchart and block diagrams; vibe-coded the app; programmed sensors and microcontrollers (LoRa modules); testing and evaluation.",
+    ],
+    process: [
+      { title: "Define the scope and the problem area" },
+      { title: "Sketch the system flowchart and block diagrams" },
+      { title: "Vibe-code the app" },
+      {
+        title: "Program sensors and microcontrollers",
+        detail: "LoRa modules.",
+      },
+      { title: "Testing and evaluation" },
     ],
     behindTheScenes:
       "The project was motivated by my personal experience with the heaters in my room. During fall, there were days I felt cold and wanted to turn on my heater, but I cannot turn on the heater by myself without permission in the main building. This inconvenience inspired me to develop a more efficient control system that could simplify the process and automate the heater's operation based on environmental conditions, reducing reliance on humans.",
@@ -208,7 +221,15 @@ export const projects: Project[] = [
       "Authored and defended a 6,000-word independent technical dissertation evaluating luminous efficacy, spectral colour rendering, and component reliability.",
       "Presented findings at the school science fair, proposing an optimized classroom lighting solution to enhance student concentration.",
       "The project aims to make an overall comparison between efficiency, colour rendering and reliability of LEDs and incandescent light bulbs, making the fundamentals for further research focused on improving both the efficiency and colour quality of LEDs.",
-      "Steps: choose the format and project scope; plan and manage the project; conduct research (literature review, analysis, evaluation); write and evaluate.",
+    ],
+    process: [
+      { title: "Choose the format and project scope" },
+      { title: "Plan and manage the project" },
+      {
+        title: "Conduct research",
+        detail: "Literature review, analysis, evaluation.",
+      },
+      { title: "Write and evaluate" },
     ],
     behindTheScenes:
       "One of the most fascinating and surprising insights is actually not in the report: Psychology of Light. Human eyes take yellowish light as relaxing and resting, whereas white light is considered as productive and working. That fact led me to propose an idea of changing all the light bulbs in tables in boarding rooms as LEDs for students to study, and in the ceiling as yellow for relaxation.",
@@ -240,7 +261,19 @@ export const projects: Project[] = [
       "Co-programmed a functional web application using Python, JavaScript, and HTML enabling students to search catalogs, borrow, and return books.",
       "Collaborated with the Student Council Environment Committee to digitize records and manually migrate library data.",
       "It started with a request from a member in my school house, Bobby, who wanted a quiet place to sleep and do work during lunch time. The library was messy, and borrowing and returning were outdated.",
-      "Steps: define goals; sketch plans and assign software, cleaning, and talking to teachers; clean the library, collect book information, and create the database; build the website and integrate the database; testing and evaluation.",
+    ],
+    process: [
+      { title: "Define goals" },
+      {
+        title: "Sketch plans and assign work",
+        detail: "Software, cleaning, and talking to teachers.",
+      },
+      {
+        title: "Clean the library and build the database",
+        detail: "Collect book information and create the database.",
+      },
+      { title: "Build the website and integrate the database" },
+      { title: "Testing and evaluation" },
     ],
     behindTheScenes:
       "Digitalizing the process and refurbishing the library connects students with the library, creating a quiet and relaxed space. More students went to the library during break and lunch time for a nap or popped in to borrow a book. For myself, after doing the project, I knew how to take data from real life, build a database from there, and integrate into a website.",
@@ -279,6 +312,9 @@ export const leadership = {
   },
   uk: {
     title: "Bosworth Independent School (Northampton, UK)",
+    photoAlt: "Activities at Bosworth Independent School",
+    photoGuideline:
+      "Ảnh hoạt động tại Bosworth Independent School, Northampton.",
     roles: [
       {
         title: "Vice House Captain (Delapré House)",
@@ -312,6 +348,8 @@ export const leadership = {
   },
   vietnam: {
     title: "CSP Sporting Federation (Hanoi, Vietnam)",
+    photoAlt: "Activities with CSP Sporting Federation",
+    photoGuideline: "Ảnh hoạt động tại CSP Sporting Federation, Hà Nội.",
     roles: [
       {
         title:
@@ -337,7 +375,7 @@ export const leadership = {
 } as const;
 
 export const broadcasting = {
-  heading: "Sports Tactical Analysis & Live Broadcasting",
+  heading: "Sports Tactical Analysis",
   online: {
     name: "Huấn Luyện Viên Online",
     role: "Media Content Creator",
@@ -377,50 +415,15 @@ export const broadcasting = {
     "Calling tactics live for thousands of viewers on Huấn Luyện Viên Onlive, while answering chat in real time, trained me to stay calm, structure complex ideas quickly, and communicate under pressure.",
 } as const;
 
-export const credentials = {
-  heading: "Education, Honors & Technical Skills",
-  education: [
-    {
-      school: "Bosworth Independent School, Northampton, UK",
-      timeline: "Sept 2025 - Present",
-      details: [
-        "A-Level Candidate (Year 13) | Predicted Grades: A*A*A*A* (Maths, Further Maths, Computer Science, Physics)",
-        "Standardized Testing: SAT: 1540 (Math: 790, RW: 750) | IELTS Academic: 8.0",
-      ],
-    },
-    {
-      school:
-        "High School for Gifted Students, Hanoi National University of Education, Vietnam",
-      timeline: "Sept 2023 - May 2025",
-      details: ["GPA: Grade 10: 9.7/10 | Grade 11: 9.6/10"],
-    },
-    {
-      school:
-        "Nguyen Tat Thanh Lower and Upper Secondary School, Hanoi, Vietnam",
-      timeline: "Sept 2019 - May 2023",
-      details: ["GPA: Grade 9: 9.6/10"],
-    },
-  ],
-  externalCourses: [
-    "Siemens Certification: Siemens Engineering Work Experience",
-    "University of Liverpool Certification: Virtual Summer School (Designing for Impossibilities)",
-    "Technical Self-Study: Currently reading Fundamentals of Electrical Engineering by Giorgio Rizzoni (Fundamentals of Electric Circuits)",
-  ],
-  honors: [
-    "Gold Medal: 50th International Invention Show: INOVA (2026)",
-    "Frank Dickens Scholarship (Full-Tuition Award): Bosworth Independent School (2025-2027)",
-    "1st Prize Winner: CATS UK Business Incubator Competition (2026)",
-    "Gold Certificate: UKMT Senior Mathematical Challenge (SMC) (2025)",
-    "Bronze Medal: UKMT Andrew Jobbings Senior Kangaroo (Invite-only national round) (2025)",
-    "Nguyen Tat Thanh Merit Scholarship: Awarded for 4 consecutive terms (2021-2023)",
-    "2x Silver & 1x Bronze Medalist: School Football Tournaments (GC23, SC24, SC25: Greeting Cup & Spring Cup)",
-  ],
-  hardSkills:
-    "Python, SQL, C/C++; Electronic Component Assembly; Circuit Design & Prototyping.",
-  softSkills:
-    "Leadership; Systems Thinking; Public Speaking; Cross-functional Collaboration.",
-  interests:
-    "Sports (Football, Basketball, Billiards, Chess - Member of the Ams Chess Academy and the Wisdom Hub of Youth); Fashion; Movies; Playing Guitar and Singing.",
+export const contact = {
+  heading: "Contact",
+  name: "Nguyen Quang Anh",
+  photoAlt: "Portrait for the contact page",
+  photoGuideline: "Ảnh chân dung hoặc ảnh liên hệ của học viên.",
+  places: ["Northampton, UK", "Hanoi, Vietnam"],
+  githubLabel: "nquanganh08-svg",
+  websiteLabel: "Website",
+  websiteHref: "/",
 } as const;
 
 export const footer = {

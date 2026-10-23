@@ -1,6 +1,7 @@
 "use client";
 
 import { MediaSlot } from "@/components/shared/MediaSlot";
+import { HomeHero } from "@/components/velixo/HomeHero";
 import { Reveal } from "@/components/velixo/Reveal";
 import { glass } from "@/components/velixo/styles";
 import { about } from "@/data/content";
@@ -8,10 +9,12 @@ import { about } from "@/data/content";
 export function AboutPage() {
   return (
     <section>
+      <HomeHero />
+
       <Reveal>
-        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+        <h2 className="mt-14 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
           {about.heading}
-        </h1>
+        </h2>
       </Reveal>
 
       <div className="mt-8 grid gap-5 lg:grid-cols-12">
@@ -32,14 +35,6 @@ export function AboutPage() {
               </p>
             </Reveal>
           ))}
-          <Reveal className={`${glass} p-5 sm:col-span-2`}>
-            <p className="text-sm font-semibold">Quick Facts</p>
-            <ul className="mt-3 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">
-              {about.quickFacts.map((fact) => (
-                <li key={fact}>{fact}</li>
-              ))}
-            </ul>
-          </Reveal>
         </div>
 
         <Reveal className={`${glass} p-7 lg:col-span-7`}>

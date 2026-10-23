@@ -56,6 +56,18 @@ export function LeadershipPage() {
         {[leadership.uk, leadership.vietnam].map((column) => (
           <Reveal key={column.title} className={`${glass} p-6`}>
             <h2 className="text-lg font-semibold">{column.title}</h2>
+            <div className="mt-4">
+              <MediaSlot
+                slotId={
+                  column.title === leadership.uk.title
+                    ? "leadership-bosworth"
+                    : "leadership-csp"
+                }
+                alt={column.photoAlt}
+                guideline={column.photoGuideline}
+                frameClassName="h-44 w-full rounded-2xl"
+              />
+            </div>
             <div className="mt-4 space-y-5">
               {column.roles.map((role) => (
                 <div key={role.title}>

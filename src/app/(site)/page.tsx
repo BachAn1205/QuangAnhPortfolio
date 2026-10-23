@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { HomeHero } from "@/components/velixo/HomeHero";
+import { AboutPage } from "@/components/velixo/AboutPage";
 
 export const metadata: Metadata = {
-  title: "Quang Anh | Engineering & Entrepreneurship Portfolio",
-  description:
-    "Embedded systems maker, tech entrepreneur, and community leader based between Northampton, UK and Hanoi, Vietnam.",
+  title: "About | Quang Anh",
+  description: "Bridging the lab bench and the real world.",
 };
 
 export default function HomePage() {
-  return <HomeHero />;
+  return <AboutPage />;
 }

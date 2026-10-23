@@ -1,11 +1,5 @@
-import type { Metadata } from "next";
-import { CredentialsPage } from "@/components/velixo/CredentialsPage";
-
-export const metadata: Metadata = {
-  title: "Credentials | Quang Anh",
-  description: "Education, honors, and technical skills.",
-};
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <CredentialsPage />;
+  redirect("/contact");
 }
