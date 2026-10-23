@@ -52,17 +52,31 @@ export function ReviewFeedbackSystem(props: ReviewFeedbackSystemProps = {}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+  const [devTools, setDevTools] = useState(false);
 
   const drawerRef = useRef<HTMLDivElement>(null);
   const commentDialogRef = useRef<HTMLDivElement>(null);
 
-  // Load saved reviewer name
+  // Load saved reviewer name. Copy-prompt tools stay off unless this browser was unlocked.
   useEffect(() => {
+    const devKey = `${cfg.storageKey}_dev`;
     try {
       const savedName = localStorage.getItem(cfg.storageKey);
       if (savedName) setReviewerName(savedName);
+
+      const params = new URLSearchParams(window.location.search);
+      const flag = params.get("reviewdev");
+      if (flag === "1" || flag === "0") {
+        if (flag === "1") localStorage.setItem(devKey, "1");
+        else localStorage.removeItem(devKey);
+        params.delete("reviewdev");
+        const query = params.toString();
+        const next = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
+        window.history.replaceState(null, "", next);
+      }
+      setDevTools(localStorage.getItem(devKey) === "1");
     } catch {
-      // Ignore localStorage error
+      setDevTools(false);
     }
   }, [cfg.storageKey]);
 
@@ -658,8 +672,8 @@ Hãy tìm file mã nguồn tương ứng và sửa lại theo đúng yêu cầu 
               </button>
             </div>
 
-            {/* Batch Selection & Action Toolbar */}
-            {filteredReviews.length > 0 && (
+            {/* Batch Selection & Action Toolbar — chỉ dev */}
+            {devTools && filteredReviews.length > 0 && (
               <div className="px-5 py-3 border-b border-[#1B3B2B]/15 bg-[#FAF7F2] flex flex-col gap-2.5 shrink-0 shadow-xs">
                 <div className="flex items-center justify-between gap-2 text-xs flex-wrap">
                   <label className="flex items-center gap-2 cursor-pointer font-medium text-[#242220] select-none hover:text-[#7B0323]">
@@ -813,13 +827,15 @@ Hãy tìm file mã nguồn tương ứng và sửa lại theo đúng yêu cầu 
                       {/* Top bar: Checkbox, Page link & Status */}
                       <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-[#1B3B2B]/10">
                         <div className="flex items-center gap-2 min-w-0">
-                          <input
-                            type="checkbox"
-                            checked={isSelected}
-                            onChange={() => handleToggleSelect(item.id)}
-                            className="w-4 h-4 rounded border-[#1B3B2B]/30 text-[#7B0323] accent-[#7B0323] cursor-pointer shrink-0"
-                            title="Tick chọn task này để copy gộp"
-                          />
+                          {devTools ? (
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => handleToggleSelect(item.id)}
+                              className="w-4 h-4 rounded border-[#1B3B2B]/30 text-[#7B0323] accent-[#7B0323] cursor-pointer shrink-0"
+                              title="Tick chọn task này để copy gộp"
+                            />
+                          ) : null}
                           <button
                             onClick={() => {
                               if (!isCurrentPage) router.push(item.page_path);
@@ -864,24 +880,27 @@ Hãy tìm file mã nguồn tương ứng và sửa lại theo đúng yêu cầu 
 
                       {/* Action buttons */}
                       <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#1B3B2B]/10">
-                        {/* Copy Prompt for AI Button */}
-                        <button
-                          onClick={() => handleCopyAIPrompt(item)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B3B2B] text-white hover:bg-[#142C20] text-[11px] font-semibold transition-all shadow-xs cursor-pointer"
-                          title="Copy prompt sẵn để dán cho AI sửa ngay"
-                        >
-                          {copiedId === item.id ? (
-                            <>
-                              <Check className="w-3 h-3 text-[#22c55e]" />
-                              <span>Đã copy!</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3 h-3 text-[#FAF7F2]" />
-                              <span>Copy Prompt cho AI</span>
-                            </>
-                          )}
-                        </button>
+                        {devTools ? (
+                          <button
+                            onClick={() => handleCopyAIPrompt(item)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B3B2B] text-white hover:bg-[#142C20] text-[11px] font-semibold transition-all shadow-xs cursor-pointer"
+                            title="Copy prompt sẵn để dán cho AI sửa ngay"
+                          >
+                            {copiedId === item.id ? (
+                              <>
+                                <Check className="w-3 h-3 text-[#22c55e]" />
+                                <span>Đã copy!</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3 h-3 text-[#FAF7F2]" />
+                                <span>Copy Prompt cho AI</span>
+                              </>
+                            )}
+                          </button>
+                        ) : (
+                          <span />
+                        )}
 
                         <div className="flex items-center gap-1.5">
                           {/* Toggle resolved */}
