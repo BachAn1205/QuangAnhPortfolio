@@ -17,33 +17,33 @@ export function AboutPage() {
         </h2>
       </Reveal>
 
-      <div className="mt-8 grid gap-5 lg:grid-cols-12">
-        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5">
-          {about.images.map((image, idx) => (
-            <Reveal
-              key={image.guideline}
-              className={`${glass} group overflow-hidden p-3 ${idx === 0 ? "sm:col-span-2" : ""}`}
+      <Reveal className={`${glass} mt-8 p-7`}>
+        <div className="grid gap-6 md:grid-cols-3">
+          {about.paragraphs.map((p) => (
+            <p
+              key={p.slice(0, 40)}
+              className="text-base leading-relaxed text-zinc-600 dark:text-zinc-300"
             >
-              <MediaSlot
-                slotId={`about-${idx}`}
-                alt={image.alt}
-                guideline={image.guideline}
-                frameClassName={`w-full rounded-xl ${idx === 0 ? "h-56" : "h-44"}`}
-              />
-              <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-                {image.caption}
-              </p>
-            </Reveal>
+              {p}
+            </p>
           ))}
         </div>
+      </Reveal>
 
-        <Reveal className={`${glass} p-7 lg:col-span-7`}>
-          <div className="space-y-4 text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
-            {about.paragraphs.map((p) => (
-              <p key={p.slice(0, 40)}>{p}</p>
-            ))}
-          </div>
-        </Reveal>
+      <div className="mt-5 grid gap-4 md:grid-cols-3">
+        {about.images.map((image, idx) => (
+          <Reveal key={image.guideline} className={`${glass} overflow-hidden p-3`}>
+            <MediaSlot
+              slotId={`about-${idx}`}
+              alt={image.alt}
+              guideline={image.guideline}
+              frameClassName="h-44 w-full rounded-xl"
+            />
+            <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+              {image.caption}
+            </p>
+          </Reveal>
+        ))}
       </div>
     </section>
   );

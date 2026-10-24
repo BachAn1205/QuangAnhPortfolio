@@ -19,8 +19,8 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 function CaseBody({ project }: { project: Project }) {
   return (
-    <div className="mt-6 divide-y divide-zinc-300/70 dark:divide-white/10">
-      <section className="pb-6">
+    <div className="mt-6 grid gap-6 md:grid-cols-3 md:divide-x md:divide-zinc-300/70 dark:md:divide-white/10">
+      <section className="md:pr-6">
         <SectionTitle>Overview</SectionTitle>
         <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
           {project.overview.map((item) => (
@@ -29,12 +29,12 @@ function CaseBody({ project }: { project: Project }) {
         </ul>
       </section>
 
-      <section className="py-6">
+      <section className="md:px-6">
         <SectionTitle>Process</SectionTitle>
         <ProcessFlow steps={project.process} />
       </section>
 
-      <section className="pt-6">
+      <section className="md:pl-6">
         <SectionTitle>Behind the scenes</SectionTitle>
         <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
           {project.behindTheScenes}
@@ -92,124 +92,73 @@ function TechStack({ tags }: { tags: string[] }) {
   );
 }
 
-function FeaturedCase({ project }: { project: Project }) {
-  return (
-    <Reveal className={`${glass} relative overflow-hidden`}>
-      <div className="relative grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="border-b border-white/10 p-6 md:p-8 lg:border-b-0 lg:border-r lg:border-white/10">
-          {project.awardBadge ? (
-            <p className="text-sm font-semibold text-teal-800 dark:text-teal-200">
-              {project.awardBadge}
-            </p>
-          ) : null}
-
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-            {project.title}
-          </h2>
-          <p className="mt-3 max-w-[48ch] text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
-            {project.highlight}
-          </p>
-
-          <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
-            {project.role}
-            {project.organization ? ` | ${project.organization}` : ""} |{" "}
-            {project.timeline}
-          </p>
-
-          <div className="mt-5">
-            <TechStack tags={project.techStack} />
-          </div>
-
-          <CaseBody project={project} />
-          <p className="mt-6 text-xs text-zinc-500">{project.mediaNote}</p>
-        </div>
-
-        <div className="grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-1 lg:p-6">
-          {project.mediaGuides.map((guide, idx) => (
-            <MediaSlot
-              key={`${project.id}-f-${idx}`}
-              slotId={`project-${project.id}-${idx}`}
-              alt={`${project.title} media ${idx + 1}`}
-              guideline={guide}
-              frameClassName={
-                idx === 0
-                  ? "h-52 w-full rounded-2xl lg:h-64"
-                  : "h-40 w-full rounded-2xl"
-              }
-            />
-          ))}
-        </div>
-      </div>
-    </Reveal>
-  );
-}
-
-function CaseStudy({
+function ProjectCard({
   project,
-  index,
+  featured = false,
 }: {
   project: Project;
-  index: number;
+  featured?: boolean;
 }) {
-  const stacked = index >= 2;
-  const flip = !stacked && index % 2 === 1;
-
   return (
-    <Reveal className={`${glass} overflow-hidden`}>
-      <div
+    <Reveal className={`${glass} p-6 md:p-8`}>
+      {featured && project.awardBadge ? (
+        <p className="text-sm font-semibold text-teal-800 dark:text-teal-200">
+          {project.awardBadge}
+        </p>
+      ) : null}
+
+      <h2
         className={
-          stacked
-            ? "grid"
-            : `grid gap-0 lg:grid-cols-2 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`
+          featured
+            ? "mt-3 text-3xl font-semibold tracking-tight md:text-4xl"
+            : "text-2xl font-semibold tracking-tight md:text-[1.7rem]"
         }
       >
-        <div className="p-6 md:p-7">
-          <h2 className="text-2xl font-semibold tracking-tight md:text-[1.7rem]">
-            {project.title}
-          </h2>
-          <p className="mt-2 text-sm font-medium leading-relaxed text-teal-800 dark:text-teal-200">
-            {project.highlight}
-          </p>
-          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-            {project.role}
-            {project.organization ? ` | ${project.organization}` : ""} |{" "}
-            {project.timeline}
-          </p>
+        {project.title}
+      </h2>
+      <p
+        className={
+          featured
+            ? "mt-3 max-w-[48ch] text-base leading-relaxed text-zinc-600 dark:text-zinc-300"
+            : "mt-2 text-sm font-medium leading-relaxed text-teal-800 dark:text-teal-200"
+        }
+      >
+        {project.highlight}
+      </p>
+      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+        {project.role}
+        {project.organization ? ` | ${project.organization}` : ""} |{" "}
+        {project.timeline}
+      </p>
 
-          <div className="mt-4">
-            <TechStack tags={project.techStack} />
-          </div>
-
-          {project.dissertationTitle ? (
-            <p className="mt-4 text-sm italic leading-relaxed text-zinc-700 dark:text-zinc-200">
-              {project.dissertationTitle}
-            </p>
-          ) : null}
-
-          <CaseBody project={project} />
-        </div>
-
-        <div
-          className={`grid gap-3 border-t border-white/10 bg-zinc-950/[0.03] p-4 dark:bg-white/[0.02] sm:grid-cols-2 ${
-            stacked
-              ? ""
-              : "lg:border-t-0 lg:border-l lg:border-white/10 lg:p-5"
-          }`}
-        >
-          {project.mediaGuides.map((guide, idx) => (
-            <MediaSlot
-              key={`${project.id}-${idx}`}
-              slotId={`project-${project.id}-${idx}`}
-              alt={`${project.title} media ${idx + 1}`}
-              guideline={guide}
-              frameClassName="h-40 w-full rounded-2xl sm:h-44"
-            />
-          ))}
-          <p className="text-xs text-zinc-500 sm:col-span-2">
-            {project.mediaNote}
-          </p>
-        </div>
+      <div className="mt-4">
+        <TechStack tags={project.techStack} />
       </div>
+
+      {project.dissertationTitle ? (
+        <p className="mt-4 text-sm italic leading-relaxed text-zinc-700 dark:text-zinc-200">
+          {project.dissertationTitle}
+        </p>
+      ) : null}
+
+      <CaseBody project={project} />
+
+      <div
+        className={`mt-6 grid gap-3 sm:grid-cols-2 ${
+          project.mediaGuides.length > 2 ? "lg:grid-cols-3" : ""
+        }`}
+      >
+        {project.mediaGuides.map((guide, idx) => (
+          <MediaSlot
+            key={`${project.id}-${idx}`}
+            slotId={`project-${project.id}-${idx}`}
+            alt={`${project.title} media ${idx + 1}`}
+            guideline={guide}
+            frameClassName="h-44 w-full rounded-2xl"
+          />
+        ))}
+      </div>
+      <p className="mt-3 text-xs text-zinc-500">{project.mediaNote}</p>
     </Reveal>
   );
 }
@@ -230,9 +179,9 @@ export function ProjectsPage() {
       </Reveal>
 
       <div className="space-y-6">
-        <FeaturedCase project={featured} />
-        {rest.map((project, index) => (
-          <CaseStudy key={project.id} project={project} index={index} />
+        <ProjectCard project={featured} featured />
+        {rest.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </section>

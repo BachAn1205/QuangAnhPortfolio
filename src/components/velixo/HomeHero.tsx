@@ -9,7 +9,7 @@ import { hero } from "@/data/content";
 
 export function HomeHero() {
   return (
-    <section className="grid items-stretch gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+    <section className="flex flex-col gap-5">
       <Reveal className={`${glass} @container p-7 md:p-10`}>
         <h1 className="whitespace-nowrap text-[clamp(1.05rem,5.1cqi,2.75rem)] font-semibold leading-none tracking-tight">
           {hero.headline}
@@ -35,16 +35,12 @@ export function HomeHero() {
         </div>
       </Reveal>
 
-      <Reveal
-        delay={0.08}
-        className={`${glass} flex h-full min-h-0 flex-col overflow-hidden p-3`}
-      >
+      <Reveal delay={0.08} className={`${glass} overflow-hidden p-3`}>
         <MediaSlot
           slotId="hero-portrait"
           alt={hero.portraitAlt}
           guideline={hero.portraitGuideline}
-          className="min-h-0 flex-1"
-          frameClassName="min-h-[16rem] w-full flex-1 rounded-xl"
+          frameClassName="h-72 w-full rounded-xl"
         />
       </Reveal>
     </section>
