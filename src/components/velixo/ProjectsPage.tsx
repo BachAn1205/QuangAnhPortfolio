@@ -65,7 +65,7 @@ function ProcessFlow({ steps }: { steps: Project["process"] }) {
             <div>
               <p className="text-sm font-semibold leading-snug">{step.title}</p>
               {step.detail ? (
-                <p className="mt-1 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+                <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                   {step.detail}
                 </p>
               ) : null}

@@ -58,9 +58,9 @@ export const hero = {
 export const about = {
   heading: "Bridging the Lab Bench and the Real World",
   paragraphs: [
-    "Maths and Physics have always been my favourite subjects since I studied in Vietnam. That was also when I started loving engineering. In Vietnam, I was infused with the world of theoretical physics; whereas, in the UK, I had an opportunity to apply the knowledge into real-life products and research papers. The spark on Electrical and Electronic Engineering was on when I was watching about the history of a blue LED and how it changed the whole world. I was amazed at such a big impact of an object whose size is less than a human hand.",
-    "For me, engineering is a bridge between theory and practices. Theory will be useless if it cannot apply to human life under any form. The main purpose of researching is still human life. Therefore, user experience must be one of the top priorities when designing a new product.",
-    "Leaving the circuits and wires, I still connect, but instead of electricity, I connect humans. In the sport field, I am a midfielder connecting between the defensive players and attackers. In the boarding house, I am a catalyst, who came up with new ideas to get boarders involved. In front of the camera, I was a streamer connecting emotions with viewers.",
+    "Maths and Physics have always been my favourite subjects since I studied in Vietnam. That was also when I started loving engineering. In Vietnam, I was infused with the world of theoretical physics; whereas, in the UK, I had an opportunity to apply the knowledge into real-life products and research papers. The spark for Electrical and Electronic Engineering was lit when I was watching a video about the blue LED and how it changed the whole world. I was amazed at such a big impact from an object whose size is less than a human hand.",
+    "For me, engineering is a bridge between theory and practice. Theory will be useless if it cannot be applied to human life in any form. The main purpose of research is still human life. Therefore, user experience must be one of the top priorities when designing a new product.",
+    "Leaving the circuits and wires, I still connect, but instead of electricity, I connect humans. On the sports field, I am a midfielder connecting the defensive players and attackers. In the boarding house, I am a catalyst who came up with new ideas to get boarders involved. In front of the camera, I was a streamer connecting emotions with viewers.",
   ],
   images: [
     {
@@ -133,9 +133,6 @@ export const projects: Project[] = [
       "Built a smart electric vehicle charging prototype powered by solar energy to shave peak grid loads and optimize charging completion.",
       "Programmed and assembled hardware protection circuits using ESP32 and Arduino microcontrollers integrated with thermal, humidity, and flame sensors to prevent charger overheating and fire hazards.",
       "Implemented AI algorithms to forecast grid demand and dynamically allocate shared power caps.",
-      "Vietnam had 374,816 EVs up to May 2026 (369,849 electric passenger cars, 3,396 electric trucks, and 1,571 electric buses), projected to reach 1 million electric vehicles (not motorbikes) by 2030.",
-      "If 100,000 vehicles used 60-120 kW fast chargers at the same time, that could create an instantaneous load of 6-12 GW, a significant fraction of the national peak. Concentrated demand, rather than total energy consumed, pressures local grid infrastructure.",
-      "A smart charging system should decide which car is prioritized, how much energy each vehicle receives, and within what time frame, given the current grid load, local distribution limits, and each vehicle's requirements.",
     ],
     process: [
       { title: "Research and raise ideas" },
@@ -147,7 +144,7 @@ export const projects: Project[] = [
       {
         title: "Build in parallel",
         detail:
-          "Software: app linked to a database and server. Hardware: C/C++ in the Arduino IDE for sensors and the microcontroller. AI: machine learning divides power for each car.",
+          "Software: app linked to a database and server. Hardware: C/C++ in the Arduino IDE. AI: machine learning divides power for each car.",
       },
       { title: "Testing and evaluation" },
     ],
@@ -165,7 +162,7 @@ export const projects: Project[] = [
     id: "smart-heater",
     title: "Smart Heater Control System (Campus IoT)",
     highlight:
-      "The system aims to decrease the power consumption of heaters in the boarding houses.",
+      "A control system that lets students request heat and lets house parents switch heaters remotely, including automatic operation from sensor readings.",
     domain: "IoT Systems",
     role: "Independent Project Lead & Systems Developer",
     organization: "Bosworth Independent School",
@@ -181,7 +178,6 @@ export const projects: Project[] = [
     overview: [
       "Designed and assembled a hardware control system using Arduino, ESP32, and LoRa Modules.",
       "Developed a functional web application using Python, JavaScript, CSS, and HTML enabling house parents to turn heaters on and off remotely and allowing students to submit heating requests.",
-      "The system aims to decrease the power consumption of heaters in the boarding houses.",
     ],
     process: [
       { title: "Define the scope and the problem area" },
@@ -194,13 +190,21 @@ export const projects: Project[] = [
       { title: "Testing and evaluation" },
     ],
     behindTheScenes:
-      "The project was motivated by my personal experience with the heaters in my room. During fall, there were days I felt cold and wanted to turn on my heater, but I cannot turn on the heater by myself without permission in the main building. This inconvenience inspired me to develop a more efficient control system that could simplify the process and automate the heater's operation based on environmental conditions, reducing reliance on humans.",
+      "The main reason I chose LoRa modules was the school Wi-Fi. My school's Wi-Fi required signing in to connect, which was a barrier for the project. Therefore, I needed to connect the microcontrollers using a different wave, and LoRa was the choice. I still needed Wi-Fi, but only for one main microcontroller that received signals from the sensors.",
     mediaNote:
       "Carousel: Arduino/ESP32 with LoRa module, House Parents and Student Request web UI, short clip of a web button switching a real circuit.",
     mediaGuides: [
       "Ảnh Arduino/ESP32 gắn module LoRa.",
       "Screenshot giao diện web House Parents / Student Request.",
       "Clip ngắn: bấm nút web điều khiển mạch thật.",
+      "Sơ đồ ER của database.",
+      "Ảnh ngồi code website.",
+      "Ảnh làm việc với cảm biến DHT11, LCD, ESP32 và Arduino.",
+      "Clip thử chế độ manual.",
+      "Clip thử chế độ automatic.",
+      "Ảnh heaters.",
+      "Ảnh receiver.",
+      "Ảnh transmitter.",
     ],
   },
   {
@@ -232,7 +236,7 @@ export const projects: Project[] = [
       { title: "Write and evaluate" },
     ],
     behindTheScenes:
-      "One of the most fascinating and surprising insights is actually not in the report: Psychology of Light. Human eyes take yellowish light as relaxing and resting, whereas white light is considered as productive and working. That fact led me to propose an idea of changing all the light bulbs in tables in boarding rooms as LEDs for students to study, and in the ceiling as yellow for relaxation.",
+      "One of the most fascinating and surprising insights is actually not in the report: Psychology of Light. Human eyes take yellowish light as relaxing and restful, whereas white light is considered productive and work-oriented. That fact led me to propose changing the bulbs in the tables in boarding rooms to LEDs for students to study, and the ceiling lights to yellow for relaxation.",
     mediaNote:
       "Science Fair presentation photo at Bosworth, and a comparison diagram of LED and incandescent lighting.",
     mediaGuides: [
@@ -428,7 +432,7 @@ export const contact = {
 
 export const footer = {
   closing:
-    "If you would like to talk about an electrical or electronic engineering project, please email me.",
+    "If anyone passing by has an interest in connecting with me for future electrical or electronic projects, I would love to receive your email.",
   emailLabel: "Email",
   locationLabel: "Location",
   linksLabel: "Links",
