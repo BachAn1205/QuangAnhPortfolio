@@ -7,7 +7,13 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { createClient } from "@supabase/supabase-js";
 import { compressImage } from "@/lib/image-compress";
+import {
+  friendlyUploadError,
+  isVideoFile,
+  MAX_VIDEO_BYTES,
+} from "@/lib/media-files";
 
 interface MediaContextType {
   media: Record<string, string>;
@@ -26,9 +32,55 @@ const MediaContext = createContext<MediaContextType>({
 });
 
 const STORAGE_KEY = "quanganh_portfolio_project_media";
+const MEDIA_BUCKET = "project-media";
 
-function isVideoFile(file: File) {
-  return file.type.startsWith("video/") || /\.(mp4|webm|mov|m4v)$/i.test(file.name);
+async function readUploadError(res: Response) {
+  const errText = await res.text().catch(() => "");
+  try {
+    const parsed = JSON.parse(errText) as { error?: string };
+    if (parsed.error) return friendlyUploadError(parsed.error);
+  } catch {
+    // response was plain text
+  }
+  return friendlyUploadError(errText || `Upload failed: ${res.status}`);
+}
+
+async function uploadVideoDirect(slotId: string, file: File): Promise<string> {
+  if (file.size > MAX_VIDEO_BYTES) {
+    throw new Error(friendlyUploadError("exceeded the maximum allowed size"));
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+  if (!supabaseUrl.startsWith("http") || !anonKey) {
+    throw new Error("SKIP_DIRECT");
+  }
+
+  const supabase = createClient(supabaseUrl, anonKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const extMatch = file.name.match(/\.([a-zA-Z0-9]+)$/);
+  const ext = extMatch ? extMatch[1].toLowerCase() : "mp4";
+  const cleanSlot = slotId.replace(/[^a-zA-Z0-9_-]/g, "_");
+  const fileName = `${cleanSlot}-${Date.now()}.${ext}`;
+  const { error } = await supabase.storage.from(MEDIA_BUCKET).upload(fileName, file, {
+    contentType: file.type || "video/mp4",
+    upsert: false,
+  });
+  if (error) {
+    throw new Error(friendlyUploadError(error.message));
+  }
+
+  const { data } = supabase.storage.from(MEDIA_BUCKET).getPublicUrl(fileName);
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ slotId, url: data.publicUrl, mediaType: "video" }),
+  });
+  if (!res.ok) {
+    throw new Error(await readUploadError(res));
+  }
+  return data.publicUrl;
 }
 
 export function MediaProvider({
@@ -92,6 +144,22 @@ export function MediaProvider({
 
   const uploadMedia = useCallback(
     async (slotId: string, file: File): Promise<string | null> => {
+      if (isVideoFile(file)) {
+        try {
+          const newUrl = await uploadVideoDirect(slotId, file);
+          setMedia((prev) => {
+            const next = { ...prev, [slotId]: newUrl };
+            persist(next);
+            return next;
+          });
+          return newUrl;
+        } catch (directErr) {
+          if (!(directErr instanceof Error) || directErr.message !== "SKIP_DIRECT") {
+            throw directErr;
+          }
+        }
+      }
+
       let fileToUpload = file;
       if (!isVideoFile(file)) {
         try {
@@ -112,8 +180,7 @@ export function MediaProvider({
         });
 
         if (!res.ok) {
-          const errText = await res.text().catch(() => "");
-          throw new Error(`Upload failed: ${res.status} ${errText}`);
+          throw new Error(await readUploadError(res));
         }
 
         const data = await res.json();
@@ -128,8 +195,11 @@ export function MediaProvider({
         return newUrl;
       } catch (err) {
         console.error(err);
+        if (isVideoFile(file)) {
+          throw err instanceof Error ? err : new Error("Không tải được video.");
+        }
         // Offline / local fallback as data URL for images only
-        if (!isVideoFile(file) && typeof window !== "undefined") {
+        if (typeof window !== "undefined") {
           return new Promise((resolve) => {
             const reader = new FileReader();
             reader.onload = () => {

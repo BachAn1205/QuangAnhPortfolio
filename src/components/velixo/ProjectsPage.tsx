@@ -19,59 +19,157 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 function CaseBody({ project }: { project: Project }) {
   return (
-    <div className="mt-6 grid gap-6 md:grid-cols-3 md:divide-x md:divide-zinc-300/70 dark:md:divide-white/10">
-      <section className="md:pr-6">
-        <SectionTitle>Overview</SectionTitle>
-        <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-          {project.overview.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
+    <div className="mt-6">
+      <div className="grid gap-8 md:grid-cols-2">
+        <section>
+          <SectionTitle>Overview</SectionTitle>
+          <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+            {project.overview.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
 
-      <section className="md:px-6">
-        <SectionTitle>Process</SectionTitle>
-        <ProcessFlow steps={project.process} />
-      </section>
+        <section>
+          <SectionTitle>Behind the scenes</SectionTitle>
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+            {project.behindTheScenes}
+          </p>
+        </section>
+      </div>
 
-      <section className="md:pl-6">
-        <SectionTitle>Behind the scenes</SectionTitle>
-        <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-          {project.behindTheScenes}
-        </p>
-      </section>
+      <ProcessFlow
+        steps={project.process}
+        projectTitle={project.title}
+        projectId={project.id}
+      />
     </div>
   );
 }
 
-function ProcessFlow({ steps }: { steps: Project["process"] }) {
+function JourneyArrow({
+  flip,
+  markerId,
+}: {
+  flip: boolean;
+  markerId: string;
+}) {
+  const curve = flip
+    ? "M78 2 C 78 28, 22 10, 22 38"
+    : "M22 2 C 22 28, 78 10, 78 38";
+
   return (
-    <div className="@container">
-      <ol className="mt-3 grid gap-3 @5xl:grid-cols-5">
-        {steps.map((step, i) => (
-          <li
-            key={step.title}
-            className="relative flex gap-3 rounded-2xl border border-teal-700/20 bg-teal-700/5 p-3 dark:border-teal-300/20 dark:bg-teal-400/5 @5xl:flex-col @5xl:gap-2"
+    <div aria-hidden className="text-teal-700 dark:text-teal-400">
+      <svg viewBox="0 0 40 56" className="mx-auto my-1 h-14 w-10 sm:hidden">
+        <defs>
+          <marker
+            id={markerId}
+            viewBox="0 0 10 10"
+            markerWidth="7"
+            markerHeight="7"
+            refX="5"
+            refY="5"
+            orient="auto"
           >
-            {i < steps.length - 1 ? (
-              <span
-                aria-hidden
-                className="absolute left-[1.3rem] top-full h-3 w-px bg-teal-700/40 dark:bg-teal-300/40 @5xl:left-full @5xl:top-1/2 @5xl:h-px @5xl:w-3"
-              />
-            ) : null}
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-700 font-mono text-xs font-semibold text-white dark:bg-teal-500 dark:text-zinc-950">
-              {i + 1}
-            </span>
-            <div>
-              <p className="text-sm font-semibold leading-snug">{step.title}</p>
-              {step.detail ? (
-                <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                  {step.detail}
-                </p>
+            <path d="M0 0 L10 5 L0 10 Z" fill="currentColor" />
+          </marker>
+        </defs>
+        <path
+          d="M20 3 C 33 18, 7 36, 20 50"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeDasharray="4 4"
+          strokeLinecap="round"
+          markerEnd={`url(#${markerId})`}
+        />
+      </svg>
+      <div className="relative hidden h-16 sm:block">
+        <svg
+          viewBox="0 0 100 40"
+          preserveAspectRatio="none"
+          className="absolute inset-0 h-full w-full"
+        >
+          <path
+            d={curve}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeDasharray="7 6"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <svg
+          viewBox="0 0 12 12"
+          className={`absolute bottom-0 h-3.5 w-3.5 -translate-x-1/2 ${
+            flip ? "left-[22%]" : "left-[78%]"
+          }`}
+        >
+          <path d="M6 11 L1 2 H11 Z" fill="currentColor" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function ProcessFlow({
+  steps,
+  projectTitle,
+  projectId,
+}: {
+  steps: Project["process"];
+  projectTitle: string;
+  projectId: string;
+}) {
+  return (
+    <div className="mt-8">
+      <SectionTitle>Process</SectionTitle>
+      <ol className="mt-4 flex flex-col">
+        {steps.map((step, i) => {
+          const isLeft = i % 2 === 0;
+          return (
+            <li key={`${projectId}-${step.title}-${i}`} className="min-w-0">
+              <div
+                className={`flex w-full flex-col gap-3 sm:w-[calc(50%-2.5rem)] ${
+                  isLeft ? "sm:mr-auto" : "sm:ml-auto"
+                }`}
+              >
+                <div className="rounded-2xl border border-teal-700/35 bg-white p-4 dark:border-teal-300/30 dark:bg-zinc-950">
+                  <div className="flex gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-700 font-mono text-xs font-semibold text-white shadow-[0_0_0_4px] shadow-teal-700/15 dark:bg-teal-400 dark:text-zinc-950 dark:shadow-teal-400/15">
+                      {i + 1}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-mono text-sm font-medium leading-snug">
+                        {step.title}
+                      </p>
+                      {step.detail ? (
+                        <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                          {step.detail}
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+                {step.media ? (
+                  <MediaSlot
+                    slotId={step.media.slotId}
+                    alt={`${projectTitle}: ${step.title}`}
+                    guideline={step.media.guideline}
+                    frameClassName="h-72 w-full rounded-xl"
+                  />
+                ) : null}
+              </div>
+              {i < steps.length - 1 ? (
+                <JourneyArrow
+                  flip={!isLeft}
+                  markerId={`${projectId}-road-${i}`}
+                />
               ) : null}
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );
@@ -142,23 +240,6 @@ function ProjectCard({
       ) : null}
 
       <CaseBody project={project} />
-
-      <div
-        className={`mt-6 grid gap-3 sm:grid-cols-2 ${
-          project.mediaGuides.length > 2 ? "lg:grid-cols-3" : ""
-        }`}
-      >
-        {project.mediaGuides.map((guide, idx) => (
-          <MediaSlot
-            key={`${project.id}-${idx}`}
-            slotId={`project-${project.id}-${idx}`}
-            alt={`${project.title} media ${idx + 1}`}
-            guideline={guide}
-            frameClassName="h-44 w-full rounded-2xl"
-          />
-        ))}
-      </div>
-      <p className="mt-3 text-xs text-zinc-500">{project.mediaNote}</p>
     </Reveal>
   );
 }

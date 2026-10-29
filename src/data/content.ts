@@ -101,12 +101,18 @@ export type Project = {
   techStack: string[];
   overview: string[];
   /** Các bước thực hiện, vẽ thành sơ đồ quy trình */
-  process: { title: string; detail?: string }[];
+  process: {
+    title: string;
+    detail?: string;
+    media?: { slotId: string; guideline: string };
+  }[];
   dissertationTitle?: string;
   behindTheScenes: string;
   mediaNote: string;
   /** Hướng dẫn từng ô upload (không dùng ảnh mẫu) */
   mediaGuides: string[];
+  /** Giữ id ảnh đã upload khi thứ tự khung đổi */
+  mediaSlotIds?: string[];
 };
 
 export const projects: Project[] = [
@@ -135,28 +141,51 @@ export const projects: Project[] = [
       "Implemented AI algorithms to forecast grid demand and dynamically allocate shared power caps.",
     ],
     process: [
-      { title: "Research and raise ideas" },
-      { title: "Discuss and choose a main idea" },
       {
-        title: "Sketch the block diagram",
+        title: "Research",
+        detail: "Raise ideas.",
+        media: {
+          slotId: "project-evcharge-ai-step-0",
+          guideline: "Ảnh ghi chú hoặc tài liệu khi nghiên cứu và nêu ý tưởng.",
+        },
+      },
+      {
+        title: "Choose",
+        detail: "Pick one main idea.",
+        media: {
+          slotId: "project-evcharge-ai-step-1",
+          guideline: "Ảnh buổi thảo luận hoặc ghi chú khi chọn ý tưởng chính.",
+        },
+      },
+      {
+        title: "Diagram",
         detail: "Assign hardware, software, and AI.",
+        media: {
+          slotId: "project-evcharge-ai-2",
+          guideline: "Sơ đồ khối hệ thống EVCharge AI.",
+        },
       },
       {
-        title: "Build in parallel",
+        title: "Build",
         detail:
-          "Software: app linked to a database and server. Hardware: C/C++ in the Arduino IDE. AI: machine learning divides power for each car.",
+          "App and server, C/C++ in the Arduino IDE, machine learning splits power for each car.",
+        media: {
+          slotId: "project-evcharge-ai-0",
+          guideline: "Video/ảnh demo mạch và phản ứng cảm biến nhiệt/lửa.",
+        },
       },
-      { title: "Testing and evaluation" },
+      {
+        title: "Test",
+        media: {
+          slotId: "project-evcharge-ai-1",
+          guideline: "Ảnh nhận huy chương vàng INOVA 2026.",
+        },
+      },
     ],
     behindTheScenes:
       "The most challenging part of integrating the sensors was ensuring that all the components worked together as a cohesive system rather than as independent units. I had to consider different scenarios. What will happen if the fire sensors detect fire? How should the system react when the temperature is too high? Answering these questions forced me to connect the components carefully, ensuring that each component not only functioned independently but also contributed effectively to the overall system.",
-    mediaNote:
-      "Video demo of circuit and sensor response to heat/flame, INOVA 2026 Gold Medal photo, and system block diagram.",
-    mediaGuides: [
-      "Video/ảnh demo mạch & phản ứng cảm biến nhiệt/lửa.",
-      "Ảnh nhận huy chương vàng INOVA 2026.",
-      "Sơ đồ khối hệ thống EVCharge AI.",
-    ],
+    mediaNote: "",
+    mediaGuides: [],
   },
   {
     id: "smart-heater",
@@ -180,32 +209,51 @@ export const projects: Project[] = [
       "Developed a functional web application using Python, JavaScript, CSS, and HTML enabling house parents to turn heaters on and off remotely and allowing students to submit heating requests.",
     ],
     process: [
-      { title: "Define the scope and the problem area" },
-      { title: "Sketch the system flowchart and block diagrams" },
-      { title: "Vibe-code the app" },
       {
-        title: "Program sensors and microcontrollers",
-        detail: "LoRa modules.",
+        title: "Scope",
+        detail: "A friend could not turn his heater on.",
+        media: {
+          slotId: "project-smart-heater-scope",
+          guideline: "Ảnh khu vực heater hoặc ghi chú phạm vi bài toán.",
+        },
       },
-      { title: "Testing and evaluation" },
+      {
+        title: "Plan",
+        detail: "Flowchart, then the modules and the site.",
+        media: {
+          slotId: "project-smart-heater-plan",
+          guideline: "Ảnh flowchart hoặc sơ đồ khối của hệ thống heater.",
+        },
+      },
+      {
+        title: "Site",
+        detail: "Students request heat. Staff accept or reject.",
+        media: {
+          slotId: "project-smart-heater-1",
+          guideline: "Screenshot giao diện web House Parents / Student Request.",
+        },
+      },
+      {
+        title: "Sense",
+        detail: "DHT11, LCD 16x2, two ESP32, Uno, LoRa.",
+        media: {
+          slotId: "project-smart-heater-sensors",
+          guideline: "Ảnh làm việc với cảm biến DHT11, LCD, ESP32, Arduino và LoRa.",
+        },
+      },
+      {
+        title: "Test",
+        detail: "Manual and automatic, 0.8 km away.",
+        media: {
+          slotId: "project-smart-heater-test",
+          guideline: "Clip thử manual hoặc automatic, và ảnh heater, receiver, transmitter.",
+        },
+      },
     ],
     behindTheScenes:
       "The main reason I chose LoRa modules was the school Wi-Fi. My school's Wi-Fi required signing in to connect, which was a barrier for the project. Therefore, I needed to connect the microcontrollers using a different wave, and LoRa was the choice. I still needed Wi-Fi, but only for one main microcontroller that received signals from the sensors.",
-    mediaNote:
-      "Carousel: Arduino/ESP32 with LoRa module, House Parents and Student Request web UI, short clip of a web button switching a real circuit.",
-    mediaGuides: [
-      "Ảnh Arduino/ESP32 gắn module LoRa.",
-      "Screenshot giao diện web House Parents / Student Request.",
-      "Clip ngắn: bấm nút web điều khiển mạch thật.",
-      "Sơ đồ ER của database.",
-      "Ảnh ngồi code website.",
-      "Ảnh làm việc với cảm biến DHT11, LCD, ESP32 và Arduino.",
-      "Clip thử chế độ manual.",
-      "Clip thử chế độ automatic.",
-      "Ảnh heaters.",
-      "Ảnh receiver.",
-      "Ảnh transmitter.",
-    ],
+    mediaNote: "",
+    mediaGuides: [],
   },
   {
     id: "epq-lighting",
@@ -227,22 +275,43 @@ export const projects: Project[] = [
       "The project aims to make an overall comparison between efficiency, colour rendering and reliability of LEDs and incandescent light bulbs, making the fundamentals for further research focused on improving both the efficiency and colour quality of LEDs.",
     ],
     process: [
-      { title: "Choose the format and project scope" },
-      { title: "Plan and manage the project" },
       {
-        title: "Conduct research",
-        detail: "Literature review, analysis, evaluation.",
+        title: "Scope",
+        detail: "Choose the format and the project scope.",
+        media: {
+          slotId: "project-epq-lighting-scope",
+          guideline: "Ảnh ghi chú khi chọn format và phạm vi EPQ.",
+        },
       },
-      { title: "Write and evaluate" },
+      {
+        title: "Plan",
+        detail: "Plan and manage the project.",
+        media: {
+          slotId: "project-epq-lighting-plan",
+          guideline: "Ảnh kế hoạch hoặc timeline của dự án EPQ.",
+        },
+      },
+      {
+        title: "Research",
+        detail: "Literature review, analysis, evaluation.",
+        media: {
+          slotId: "project-epq-lighting-1",
+          guideline: "Sơ đồ hoặc biểu đồ so sánh LED và đèn sợi đốt.",
+        },
+      },
+      {
+        title: "Write",
+        detail: "Write and evaluate.",
+        media: {
+          slotId: "project-epq-lighting-0",
+          guideline: "Ảnh trình bày Science Fair tại Bosworth.",
+        },
+      },
     ],
     behindTheScenes:
       "One of the most fascinating and surprising insights is actually not in the report: Psychology of Light. Human eyes take yellowish light as relaxing and restful, whereas white light is considered productive and work-oriented. That fact led me to propose changing the bulbs in the tables in boarding rooms to LEDs for students to study, and the ceiling lights to yellow for relaxation.",
-    mediaNote:
-      "Science Fair presentation photo at Bosworth, and a comparison diagram of LED and incandescent lighting.",
-    mediaGuides: [
-      "Ảnh trình bày Science Fair tại Bosworth.",
-      "Sơ đồ / biểu đồ so sánh LED vs đèn sợi đốt.",
-    ],
+    mediaNote: "",
+    mediaGuides: [],
   },
   {
     id: "digital-library",
@@ -267,26 +336,50 @@ export const projects: Project[] = [
       "It started with a request from a member in my school house, Bobby, who wanted a quiet place to sleep and do work during lunch time. The library was messy, and borrowing and returning were outdated.",
     ],
     process: [
-      { title: "Define goals" },
       {
-        title: "Sketch plans and assign work",
+        title: "Goals",
+        detail: "Define the goals for the library.",
+        media: {
+          slotId: "project-digital-library-goals",
+          guideline: "Ảnh thư viện lúc bắt đầu hoặc ghi chú mục tiêu.",
+        },
+      },
+      {
+        title: "Plan",
         detail: "Software, cleaning, and talking to teachers.",
+        media: {
+          slotId: "project-digital-library-plan",
+          guideline: "Ảnh phân công: phần mềm, dọn thư viện, trao đổi với giáo viên.",
+        },
       },
       {
-        title: "Clean the library and build the database",
+        title: "Database",
         detail: "Collect book information and create the database.",
+        media: {
+          slotId: "project-digital-library-1",
+          guideline: "Sơ đồ schema database thư viện.",
+        },
       },
-      { title: "Build the website and integrate the database" },
-      { title: "Testing and evaluation" },
+      {
+        title: "Site",
+        detail: "Build the website and integrate the database.",
+        media: {
+          slotId: "project-digital-library-0",
+          guideline: "Screenshot giao diện tìm và mượn sách.",
+        },
+      },
+      {
+        title: "Test",
+        media: {
+          slotId: "project-digital-library-test",
+          guideline: "Ảnh hoặc clip kiểm thử mượn và trả sách.",
+        },
+      },
     ],
     behindTheScenes:
       "Digitalizing the process and refurbishing the library connects students with the library, creating a quiet and relaxed space. More students went to the library during break and lunch time for a nap or popped in to borrow a book. For myself, after doing the project, I knew how to take data from real life, build a database from there, and integrate into a website.",
-    mediaNote:
-      "Search/borrow web UI screenshot and database table schema diagram.",
-    mediaGuides: [
-      "Screenshot giao diện tìm / mượn sách.",
-      "Sơ đồ schema database thư viện.",
-    ],
+    mediaNote: "",
+    mediaGuides: [],
   },
 ];
 

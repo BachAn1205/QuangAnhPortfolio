@@ -10,10 +10,7 @@ import {
   VideoCamera,
 } from "@phosphor-icons/react";
 import { useProjectMedia } from "@/lib/media-context";
-
-function isVideoUrl(url: string) {
-  return /\.(mp4|webm|mov|m4v)(\?|$)/i.test(url) || url.includes("video/");
-}
+import { isVideoUrl } from "@/lib/media-files";
 
 export function MediaSlot({
   slotId,
@@ -34,6 +31,7 @@ export function MediaSlot({
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const current = getMedia(slotId);
   const hasMedia = Boolean(current);
   const video = current ? isVideoUrl(current) : false;
@@ -41,8 +39,14 @@ export function MediaSlot({
   const onFile = async (file: File | undefined) => {
     if (!file) return;
     setUploading(true);
+    setError(null);
     try {
-      await uploadMedia(slotId, file);
+      const url = await uploadMedia(slotId, file);
+      if (!url) {
+        setError("Không tải được file. Hãy thử lại.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Không tải được file.");
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = "";
@@ -72,6 +76,11 @@ export function MediaSlot({
               controls
               playsInline
               preload="metadata"
+              onError={() =>
+                setError(
+                  "Đã tải lên nhưng trình duyệt không phát được video này. Hãy dùng file mp4."
+                )
+              }
             />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
@@ -157,6 +166,10 @@ export function MediaSlot({
           </button>
         ) : null}
       </div>
+
+      {error ? (
+        <p className="text-[11px] leading-relaxed text-red-700 dark:text-red-300">{error}</p>
+      ) : null}
 
       <input
         ref={inputRef}

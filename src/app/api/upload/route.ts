@@ -9,6 +9,7 @@ import {
   TABLE_NAME,
 } from "@/lib/supabase";
 import { fetchDatabaseMedia } from "@/lib/get-db-media";
+import { friendlyUploadError, MAX_VIDEO_BYTES } from "@/lib/media-files";
 
 const DB_PATH = path.join(process.cwd(), "src", "data", "project-media.json");
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
@@ -52,8 +53,62 @@ export async function GET() {
   }
 }
 
+async function saveMediaRecord(
+  supabase: NonNullable<ReturnType<typeof getServiceSupabase>>,
+  slotId: string,
+  publicUrl: string,
+  mediaType: "image" | "video"
+) {
+  const { error: rowError } = await supabase.from(MEDIA_TABLE).upsert({
+    id: slotId,
+    media_url: publicUrl,
+    media_type: mediaType,
+    updated_at: new Date().toISOString(),
+  });
+  if (rowError) {
+    throw new Error(rowError.message);
+  }
+
+  if (mediaType === "image") {
+    await supabase.from(TABLE_NAME).upsert({
+      id: slotId,
+      image_url: publicUrl,
+      updated_at: new Date().toISOString(),
+    });
+  } else {
+    await supabase.from(TABLE_NAME).delete().eq("id", slotId);
+  }
+
+  const local = await getLocalDb();
+  local[slotId] = publicUrl;
+  await saveLocalDb(local);
+}
+
 export async function POST(req: NextRequest) {
   try {
+    const contentType = req.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      const body = (await req.json()) as {
+        slotId?: string;
+        url?: string;
+        mediaType?: string;
+      };
+      const slotId = body.slotId || "";
+      const publicUrl = body.url || "";
+      const mediaType = body.mediaType === "video" ? "video" : "image";
+      const base = (process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "");
+      const allowedPrefix = `${base}/storage/v1/object/public/${BUCKET_NAME}/`;
+      if (!slotId || !publicUrl.startsWith(allowedPrefix)) {
+        return NextResponse.json({ error: "Invalid media url" }, { status: 400 });
+      }
+      const supabase = getServiceSupabase();
+      if (!supabase) {
+        return NextResponse.json({ error: "Supabase chưa cấu hình" }, { status: 503 });
+      }
+      await saveMediaRecord(supabase, slotId, publicUrl, mediaType);
+      return NextResponse.json({ success: true, url: publicUrl, mediaType, cloud: "supabase" });
+    }
+
     const formData = await req.formData();
     const slotId = formData.get("slotId") as string;
     const file = formData.get("file") as File | null;
@@ -71,6 +126,13 @@ export async function POST(req: NextRequest) {
     const cleanSlot = slotId.replace(/[^a-zA-Z0-9_-]/g, "_");
     const fileName = `${cleanSlot}-${Date.now()}.${ext}`;
     const mediaType = detectMediaType(file, ext);
+
+    if (mediaType === "video" && file.size > MAX_VIDEO_BYTES) {
+      return NextResponse.json(
+        { error: friendlyUploadError("exceeded the maximum allowed size") },
+        { status: 413 }
+      );
+    }
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
@@ -91,7 +153,14 @@ export async function POST(req: NextRequest) {
 
         if (storageError) {
           console.error("Supabase Storage upload error:", storageError);
-          throw storageError;
+          const message =
+            "message" in storageError && typeof storageError.message === "string"
+              ? storageError.message
+              : "Upload failed";
+          return NextResponse.json(
+            { error: friendlyUploadError(message) },
+            { status: 500 }
+          );
         }
 
         const { data: urlData } = supabase.storage
@@ -99,25 +168,7 @@ export async function POST(req: NextRequest) {
           .getPublicUrl(fileName);
         const publicUrl = urlData.publicUrl;
 
-        await supabase.from(MEDIA_TABLE).upsert({
-          id: slotId,
-          media_url: publicUrl,
-          media_type: mediaType,
-          updated_at: new Date().toISOString(),
-        });
-
-        // Keep legacy table in sync for image slots
-        if (mediaType === "image") {
-          await supabase.from(TABLE_NAME).upsert({
-            id: slotId,
-            image_url: publicUrl,
-            updated_at: new Date().toISOString(),
-          });
-        }
-
-        const local = await getLocalDb();
-        local[slotId] = publicUrl;
-        await saveLocalDb(local);
+        await saveMediaRecord(supabase, slotId, publicUrl, mediaType);
 
         return NextResponse.json({
           success: true,
@@ -168,10 +219,8 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     console.error("POST upload error:", error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Upload failed" },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : "Upload failed";
+    return NextResponse.json({ error: friendlyUploadError(message) }, { status: 500 });
   }
 }
 
