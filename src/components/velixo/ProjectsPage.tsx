@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { CaretDown } from "@phosphor-icons/react";
 import { MediaSlot } from "@/components/shared/MediaSlot";
 import { Reveal } from "@/components/velixo/Reveal";
 import { glass } from "@/components/velixo/styles";
@@ -131,7 +133,7 @@ function ProcessFlow({
           return (
             <li key={`${projectId}-${step.title}-${i}`} className="min-w-0">
               <div
-                className={`flex w-full flex-col gap-3 sm:w-[calc(50%-2.5rem)] ${
+                className={`flex w-full flex-col gap-3 sm:w-[calc(50%-1.25rem)] ${
                   isLeft ? "sm:mr-auto" : "sm:ml-auto"
                 }`}
               >
@@ -152,15 +154,30 @@ function ProcessFlow({
                     </div>
                   </div>
                 </div>
-                {step.media ? (
-                  <MediaSlot
-                    slotId={step.media.slotId}
-                    alt={`${projectTitle}: ${step.title}`}
-                    guideline={step.media.guideline}
-                    frameClassName="h-72 w-full rounded-xl"
-                  />
-                ) : null}
               </div>
+              {step.media ? (
+                <div
+                  className={`mt-3 flex flex-col gap-4 sm:flex-row sm:items-start ${
+                    isLeft ? "" : "sm:flex-row-reverse"
+                  }`}
+                >
+                  <div className="min-w-0 sm:w-[calc(50%-1.25rem)]">
+                    <MediaSlot
+                      slotId={step.media.slotId}
+                      alt={`${projectTitle}: ${step.title}`}
+                      guideline={step.media.guideline}
+                      frameClassName="h-72 w-full rounded-xl"
+                    />
+                  </div>
+                  {step.narrative ? (
+                    <div className="min-w-0 flex-1 space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                      {step.narrative.split("\n\n").map((paragraph) => (
+                        <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
               {i < steps.length - 1 ? (
                 <JourneyArrow
                   flip={!isLeft}
@@ -197,9 +214,12 @@ function ProjectCard({
   project: Project;
   featured?: boolean;
 }) {
+  const [open, setOpen] = useState(false);
+  const showAward = Boolean(open && featured && project.awardBadge);
+
   return (
     <Reveal className={`${glass} p-6 md:p-8`}>
-      {featured && project.awardBadge ? (
+      {showAward ? (
         <p className="text-sm font-semibold text-teal-800 dark:text-teal-200">
           {project.awardBadge}
         </p>
@@ -208,7 +228,7 @@ function ProjectCard({
       <h2
         className={
           featured
-            ? "mt-3 text-3xl font-semibold tracking-tight md:text-4xl"
+            ? `${showAward ? "mt-3" : ""} text-3xl font-semibold tracking-tight md:text-4xl`
             : "text-2xl font-semibold tracking-tight md:text-[1.7rem]"
         }
       >
@@ -224,22 +244,46 @@ function ProjectCard({
         {project.highlight}
       </p>
       <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-        {project.role}
-        {project.organization ? ` | ${project.organization}` : ""} |{" "}
-        {project.timeline}
+        {open ? (
+          <>
+            {project.role}
+            {project.organization ? ` | ${project.organization}` : ""} |{" "}
+            {project.timeline}
+          </>
+        ) : (
+          project.timeline
+        )}
       </p>
 
-      <div className="mt-4">
-        <TechStack tags={project.techStack} />
-      </div>
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+        className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-teal-700/30 bg-teal-700/10 px-3 py-1.5 text-xs font-semibold text-teal-900 transition hover:bg-teal-700/15 dark:border-teal-300/30 dark:bg-teal-400/10 dark:text-teal-100 dark:hover:bg-teal-400/15"
+      >
+        <CaretDown
+          size={14}
+          weight="bold"
+          className={`transition ${open ? "rotate-180" : ""}`}
+        />
+        {open ? "Collapse" : "Expand"}
+      </button>
 
-      {project.dissertationTitle ? (
-        <p className="mt-4 text-sm italic leading-relaxed text-zinc-700 dark:text-zinc-200">
-          {project.dissertationTitle}
-        </p>
+      {open ? (
+        <>
+          <div className="mt-4">
+            <TechStack tags={project.techStack} />
+          </div>
+
+          {project.dissertationTitle ? (
+            <p className="mt-4 text-sm italic leading-relaxed text-zinc-700 dark:text-zinc-200">
+              {project.dissertationTitle}
+            </p>
+          ) : null}
+
+          <CaseBody project={project} />
+        </>
       ) : null}
-
-      <CaseBody project={project} />
     </Reveal>
   );
 }

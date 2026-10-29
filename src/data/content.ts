@@ -104,6 +104,8 @@ export type Project = {
   process: {
     title: string;
     detail?: string;
+    /** Đoạn mô tả đặt cạnh khung ảnh của bước */
+    narrative?: string;
     media?: { slotId: string; guideline: string };
   }[];
   dissertationTitle?: string;
@@ -144,6 +146,8 @@ export const projects: Project[] = [
       {
         title: "Research",
         detail: "Raise ideas.",
+        narrative:
+          "When I was researching to find an idea for the project, I read an article discussing the risks to electricity infrastructure. The article stated that Vietnam has 374,816 EVs up to May 2026: 369,849 electric passenger cars, 3,396 electric trucks, and 1,571 electric buses. This number is projected to be 1 million electric vehicles, not motorbikes, by 2030.\n\nIn dense urban areas, if 100,000 vehicles used 60–120 kW fast chargers at the same time, that could create an instantaneous load of 6–12 GW, a significant fraction of the national peak. The author worried that this concentrated demand, rather than the total energy consumed, puts pressure on local grid infrastructure. After reading, I believed this will be a huge problem, and that there is an urgent need for a smart charging system that can manage how power is allocated across vehicles.",
         media: {
           slotId: "project-evcharge-ai-step-0",
           guideline: "Ảnh ghi chú hoặc tài liệu khi nghiên cứu và nêu ý tưởng.",
@@ -152,6 +156,8 @@ export const projects: Project[] = [
       {
         title: "Choose",
         detail: "Pick one main idea.",
+        narrative:
+          "After discussions with my mentor and my team, there were some potential ideas about robot hands or smart glasses, so we decided to go with my idea: a smart charging system. The project aims to create a sustainable and safe charging station powered by solar energy.",
         media: {
           slotId: "project-evcharge-ai-step-1",
           guideline: "Ảnh buổi thảo luận hoặc ghi chú khi chọn ý tưởng chính.",
@@ -160,6 +166,8 @@ export const projects: Project[] = [
       {
         title: "Diagram",
         detail: "Assign hardware, software, and AI.",
+        narrative:
+          "Our objectives were to design two demo charging stations that measure voltage, current, power, temperature, and battery status in real time, and an energy management system that adjusts each station when the total available power is limited.\n\nWe also planned a user application and an admin dashboard to monitor sessions, set target battery levels, specify departure times, and view charging history. The station would bring together grid electricity, simulated solar energy, and battery storage, then compare intelligent charging with equal power distribution and first-come, first-served prioritisation.",
         media: {
           slotId: "project-evcharge-ai-2",
           guideline: "Sơ đồ khối hệ thống EVCharge AI.",
@@ -169,6 +177,8 @@ export const projects: Project[] = [
         title: "Build",
         detail:
           "App and server, C/C++ in the Arduino IDE, machine learning splits power for each car.",
+        narrative:
+          "My task was to program and assemble hardware protection circuits using ESP32 and Arduino microcontrollers, integrated with thermal, humidity, and flame sensors to prevent charger overheating and fire hazards. I mostly used the Arduino IDE for this task.",
         media: {
           slotId: "project-evcharge-ai-0",
           guideline: "Video/ảnh demo mạch và phản ứng cảm biến nhiệt/lửa.",
@@ -176,6 +186,8 @@ export const projects: Project[] = [
       },
       {
         title: "Test",
+        narrative:
+          "After everyone finished the work, we tested and evaluated the product by giving it different scenarios, to make sure the system functioned properly. We tested it with both cars in the slots and watched how the system distributed energy and showed that in the app.",
         media: {
           slotId: "project-evcharge-ai-1",
           guideline: "Ảnh nhận huy chương vàng INOVA 2026.",
@@ -212,6 +224,8 @@ export const projects: Project[] = [
       {
         title: "Scope",
         detail: "A friend could not turn his heater on.",
+        narrative:
+          "As a Boarding Leader, my responsibility was to raise ideas to improve students' boarding experiences. After hearing one of my friends complaining about the heaters, there were days he felt cold and wanted to turn his heater on, but he could not turn it on by himself without permission in the main building. This inconvenience inspired me to develop a control system that could simplify the process and automate the heater from environmental conditions, reducing reliance on humans.",
         media: {
           slotId: "project-smart-heater-scope",
           guideline: "Ảnh khu vực heater hoặc ghi chú phạm vi bài toán.",
@@ -220,6 +234,8 @@ export const projects: Project[] = [
       {
         title: "Plan",
         detail: "Flowchart, then the modules and the site.",
+        narrative:
+          "To embark on a project like the Smart Heaters Controlled System, I needed to understand how the system would work, so I sketched the system flowchart. After the design was right, I started on each part: building the modules and building the website.",
         media: {
           slotId: "project-smart-heater-plan",
           guideline: "Ảnh flowchart hoặc sơ đồ khối của hệ thống heater.",
@@ -228,6 +244,8 @@ export const projects: Project[] = [
       {
         title: "Site",
         detail: "Students request heat. Staff accept or reject.",
+        narrative:
+          "Having experience from the Library System project, I decided to make a website for students to request that the heaters be turned on, and for administrators to accept or reject the requests. I used Visual Studio Code AI to vibe-code. During the process, I still needed to debug by hand and read the code.",
         media: {
           slotId: "project-smart-heater-1",
           guideline: "Screenshot giao diện web House Parents / Student Request.",
@@ -236,6 +254,8 @@ export const projects: Project[] = [
       {
         title: "Sense",
         detail: "DHT11, LCD 16x2, two ESP32, Uno, LoRa.",
+        narrative:
+          "At the same time, I programmed the sensors and microcontrollers. This task was deeper and broader than any project I had done, so I had to research and try a lot before it worked.\n\nFor sensors, I used a DHT11. For the screen, I used an I2C LCD 16x2. I also used three microcontrollers: two ESP32 DevKit V1 boards and one Arduino Uno, and I integrated LoRa modules to transmit data. There were few guides for a project like this, so I drew my own circuit in Fritzing. It was my first time using the app, and it took a long time to learn.",
         media: {
           slotId: "project-smart-heater-sensors",
           guideline: "Ảnh làm việc với cảm biến DHT11, LCD, ESP32, Arduino và LoRa.",
@@ -244,6 +264,8 @@ export const projects: Project[] = [
       {
         title: "Test",
         detail: "Manual and automatic, 0.8 km away.",
+        narrative:
+          "After finishing the website and the hardware, I tested the product. My transmitter was in another boarding house, about 0.8 km away. I tested whether both modes, manual and automatic, would work properly.",
         media: {
           slotId: "project-smart-heater-test",
           guideline: "Clip thử manual hoặc automatic, và ảnh heater, receiver, transmitter.",
@@ -278,6 +300,8 @@ export const projects: Project[] = [
       {
         title: "Scope",
         detail: "Choose the format and the project scope.",
+        narrative:
+          "The project aims to make an overall comparison between efficiency, colour rendering and reliability of LEDs and incandescent light bulbs, making the fundamentals for further research focused on improving both the efficiency and colour quality of LEDs.",
         media: {
           slotId: "project-epq-lighting-scope",
           guideline: "Ảnh ghi chú khi chọn format và phạm vi EPQ.",
@@ -294,6 +318,8 @@ export const projects: Project[] = [
       {
         title: "Research",
         detail: "Literature review, analysis, evaluation.",
+        narrative:
+          "I authored and defended a 6,000-word independent technical dissertation evaluating luminous efficacy, spectral colour rendering, and component reliability.",
         media: {
           slotId: "project-epq-lighting-1",
           guideline: "Sơ đồ hoặc biểu đồ so sánh LED và đèn sợi đốt.",
@@ -302,6 +328,8 @@ export const projects: Project[] = [
       {
         title: "Write",
         detail: "Write and evaluate.",
+        narrative:
+          "I presented the findings at the school science fair, proposing an optimized classroom lighting solution to enhance student concentration.",
         media: {
           slotId: "project-epq-lighting-0",
           guideline: "Ảnh trình bày Science Fair tại Bosworth.",
@@ -339,6 +367,8 @@ export const projects: Project[] = [
       {
         title: "Goals",
         detail: "Define the goals for the library.",
+        narrative:
+          "It started with my observation that students at Bosworth lacked a space to read and study during breaks and lunchtime. There was a small library in the hall, but it had been used as a storage room during the summer and had not been cleaned. Borrowing and returning were outdated: the data was only written in notebooks, so due dates and borrowers were hard to track.\n\nSeeing that work, my friends on the Environment Committee and I refurbished the library and created a Bosworth Library System, to give students a quiet space and make borrowing and returning more organized and digital.",
         media: {
           slotId: "project-digital-library-goals",
           guideline: "Ảnh thư viện lúc bắt đầu hoặc ghi chú mục tiêu.",
@@ -347,6 +377,8 @@ export const projects: Project[] = [
       {
         title: "Plan",
         detail: "Software, cleaning, and talking to teachers.",
+        narrative:
+          "I scheduled meetings with my friend Peak, who was building the website, and with Mrs Taylor, our Head of Student Development, to confirm the rules and how the library would function. After that, I wrote a document on how the system would work.",
         media: {
           slotId: "project-digital-library-plan",
           guideline: "Ảnh phân công: phần mềm, dọn thư viện, trao đổi với giáo viên.",
@@ -355,6 +387,8 @@ export const projects: Project[] = [
       {
         title: "Database",
         detail: "Collect book information and create the database.",
+        narrative:
+          "I was in charge of the database, so I had to collect which books were in the library. My friends and I scanned the ISBN of every book and put it into a sheet. At the same time, I taught myself SQL from a full beginner database course. I then built the database from the document I had written about how the system would work.",
         media: {
           slotId: "project-digital-library-1",
           guideline: "Sơ đồ schema database thư viện.",
@@ -363,6 +397,8 @@ export const projects: Project[] = [
       {
         title: "Site",
         detail: "Build the website and integrate the database.",
+        narrative:
+          "At the same time, my friend was building the skeleton of the website. After I finished adding the data, I wrote the SQL queries for the website. We worked together, giving feedback and editing the design and the functions.",
         media: {
           slotId: "project-digital-library-0",
           guideline: "Screenshot giao diện tìm và mượn sách.",
@@ -370,6 +406,8 @@ export const projects: Project[] = [
       },
       {
         title: "Test",
+        narrative:
+          "The library is now in testing and evaluation. It is nearly done and will be released for students after the half-term break. We asked friends to test it beforehand, and the feedback was good. There were some comments about the UI, and we are fixing them.",
         media: {
           slotId: "project-digital-library-test",
           guideline: "Ảnh hoặc clip kiểm thử mượn và trả sách.",
