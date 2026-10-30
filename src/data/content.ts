@@ -139,6 +139,8 @@ export type Project = {
   mediaNote: string;
   /** Hướng dẫn từng ô upload (không dùng ảnh mẫu) */
   mediaGuides: string[];
+  /** Ô upload bản vẽ, tách khỏi ảnh của từng bước */
+  drawings?: { title: string; slots: { slotId: string; guideline: string }[] }[];
   /** Giữ id ảnh đã upload khi thứ tự khung đổi */
   mediaSlotIds?: string[];
 };
@@ -302,6 +304,39 @@ export const projects: Project[] = [
       "The main reason I chose LoRa modules was the school Wi-Fi. My school's Wi-Fi required signing in to connect, which was a barrier for the project. Therefore, I needed to connect the microcontrollers using a different wave, and LoRa was the choice. I still needed Wi-Fi, but only for one main microcontroller that received signals from the sensors.",
     mediaNote: "",
     mediaGuides: [],
+    drawings: [
+      {
+        title: "Heaters",
+        slots: [
+          {
+            slotId: "project-smart-heater-drawing",
+            guideline: "Bản vẽ kỹ thuật của heater.",
+          },
+          {
+            slotId: "project-smart-heater-built",
+            guideline: "Ảnh thực tế mạch heater đã lắp.",
+          },
+        ],
+      },
+      {
+        title: "Transmitter",
+        slots: [
+          {
+            slotId: "project-smart-heater-transmitter",
+            guideline: "Bản vẽ hoặc ảnh mạch transmitter.",
+          },
+        ],
+      },
+      {
+        title: "Receiver",
+        slots: [
+          {
+            slotId: "project-smart-heater-receiver",
+            guideline: "Bản vẽ hoặc ảnh mạch receiver.",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "epq-lighting",

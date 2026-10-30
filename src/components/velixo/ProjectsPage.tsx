@@ -46,6 +46,28 @@ function CaseBody({ project }: { project: Project }) {
         projectTitle={project.title}
         projectId={project.id}
       />
+
+      {project.drawings?.length ? (
+        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          {project.drawings.map((group) => (
+            <section key={group.title} className="min-w-0">
+              <SectionTitle>{group.title}</SectionTitle>
+              <div className="mt-3 space-y-4">
+                {group.slots.map((slot) => (
+                  <MediaSlot
+                    key={slot.slotId}
+                    slotId={slot.slotId}
+                    alt={`${project.title}: ${group.title}`}
+                    guideline={slot.guideline}
+                    frameClassName="h-72 w-full rounded-xl"
+                    fitContent
+                  />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -236,13 +258,7 @@ function ProjectCard({
       >
         {project.title}
       </h2>
-      <p
-        className={
-          featured
-            ? "mt-3 max-w-[48ch] text-base leading-relaxed text-zinc-600 dark:text-zinc-300"
-            : "mt-2 text-sm font-medium leading-relaxed text-teal-800 dark:text-teal-200"
-        }
-      >
+      <p className="mt-2 text-sm font-medium leading-relaxed text-teal-800 dark:text-teal-200">
         {project.highlight}
       </p>
       <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">

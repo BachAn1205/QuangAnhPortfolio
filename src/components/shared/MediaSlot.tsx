@@ -11,6 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import { useProjectMedia } from "@/lib/media-context";
 import { isVideoUrl } from "@/lib/media-files";
+import { MediaLightbox } from "@/components/shared/MediaLightbox";
 
 export function MediaSlot({
   slotId,
@@ -35,6 +36,7 @@ export function MediaSlot({
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [zoomed, setZoomed] = useState(false);
   const current = getMedia(slotId);
   const hasMedia = Boolean(current);
   const video = current ? isVideoUrl(current) : false;
@@ -77,36 +79,45 @@ export function MediaSlot({
         }`}
       >
         {hasMedia && current ? (
-          video ? (
-            <video
-              src={current}
-              className={
-                hugMedia
-                  ? "block h-auto w-full"
-                  : "absolute inset-0 h-full w-full object-contain"
-              }
-              controls
-              playsInline
-              preload="metadata"
-              onError={() =>
-                setError(
-                  "Đã tải lên nhưng trình duyệt không phát được video này. Hãy dùng file mp4."
-                )
-              }
-            />
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={current}
-              alt={alt}
-              className={
-                hugMedia
-                  ? "block h-auto w-full"
-                  : "absolute inset-0 h-full w-full object-contain"
-              }
-              loading="lazy"
-            />
-          )
+          <button
+            type="button"
+            onClick={() => setZoomed(true)}
+            aria-label={`Phóng to ${alt}`}
+            className={`cursor-zoom-in ${
+              hugMedia ? "block w-full" : "absolute inset-0"
+            }`}
+          >
+            {video ? (
+              <video
+                src={current}
+                className={
+                  hugMedia
+                    ? "pointer-events-none block h-auto w-full"
+                    : "pointer-events-none h-full w-full object-contain"
+                }
+                muted
+                playsInline
+                preload="metadata"
+                onError={() =>
+                  setError(
+                    "Đã tải lên nhưng trình duyệt không phát được video này. Hãy dùng file mp4."
+                  )
+                }
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={current}
+                alt={alt}
+                className={
+                  hugMedia
+                    ? "block h-auto w-full"
+                    : "h-full w-full object-contain"
+                }
+                loading="lazy"
+              />
+            )}
+          </button>
         ) : (
           <button
             type="button"
@@ -194,6 +205,27 @@ export function MediaSlot({
         className="hidden"
         onChange={(e) => onFile(e.target.files?.[0])}
       />
+
+      {zoomed && current ? (
+        <MediaLightbox label={alt} onClose={() => setZoomed(false)}>
+          {video ? (
+            <video
+              src={current}
+              className="block max-h-[calc(100vh-6.5rem)] w-full max-w-[min(90vw,1100px)] bg-black"
+              controls
+              autoPlay
+              playsInline
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={current}
+              alt={alt}
+              className="block max-h-[calc(100vh-6.5rem)] w-auto max-w-[min(90vw,1100px)] object-contain"
+            />
+          )}
+        </MediaLightbox>
+      ) : null}
     </div>
   );
 }
