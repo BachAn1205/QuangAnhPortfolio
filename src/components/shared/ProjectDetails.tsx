@@ -81,8 +81,8 @@ export function ProjectDetails({
             guideline={guide}
             frameClassName={
               variant === "benbox"
-                ? "h-40 w-full border border-zinc-300 dark:border-zinc-600"
-                : "h-40 w-full rounded-2xl"
+                ? "h-96 w-full border border-zinc-300 dark:border-zinc-600"
+                : "h-96 w-full rounded-2xl"
             }
           />
         ))}

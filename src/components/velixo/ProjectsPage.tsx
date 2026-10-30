@@ -6,6 +6,7 @@ import { MediaSlot } from "@/components/shared/MediaSlot";
 import { Reveal } from "@/components/velixo/Reveal";
 import { glass } from "@/components/velixo/styles";
 import {
+  internship,
   projects,
   projectsSection,
   type Project,
@@ -167,6 +168,7 @@ function ProcessFlow({
                       alt={`${projectTitle}: ${step.title}`}
                       guideline={step.media.guideline}
                       frameClassName="h-72 w-full rounded-xl"
+                      fitContent
                     />
                   </div>
                   {step.narrative ? (
@@ -288,22 +290,57 @@ function ProjectCard({
   );
 }
 
+function InternshipBand() {
+  return (
+    <article className={`${glass} p-6 md:p-8`}>
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+        <div className="min-w-0">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            {internship.role}
+          </h2>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+            {internship.organization}
+          </p>
+        </div>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          {internship.timeline}
+        </p>
+      </div>
+      <div className="mt-5 grid gap-6 border-t border-zinc-200 pt-5 md:grid-cols-3 dark:border-white/10">
+        {internship.duties.map((duty) => (
+          <section key={duty.index}>
+            <p className="font-mono text-xs font-semibold text-teal-800 dark:text-teal-300">
+              {duty.index}
+            </p>
+            <h3 className="mt-1.5 text-base font-semibold">{duty.title}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+              {duty.detail}
+            </p>
+          </section>
+        ))}
+      </div>
+    </article>
+  );
+}
+
 export function ProjectsPage() {
   const featured = projects.find((p) => p.featured) ?? projects[0];
   const rest = projects.filter((p) => p.id !== featured.id);
 
   return (
     <section className="space-y-10">
-      <Reveal className="@container">
+      <Reveal>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
           {projectsSection.heading}
         </h1>
-        <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,1.32cqi,1rem)] leading-normal text-zinc-600 dark:text-zinc-300">
-          {projectsSection.lead}
-        </p>
       </Reveal>
 
+      <InternshipBand />
+
       <div className="space-y-6">
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+          {projectsSection.projectsHeading}
+        </h2>
         <ProjectCard project={featured} featured />
         {rest.map((project) => (
           <ProjectCard key={project.id} project={project} />

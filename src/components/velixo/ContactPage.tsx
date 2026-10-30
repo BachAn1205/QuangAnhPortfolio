@@ -24,10 +24,17 @@ export function ContactPage() {
         </h1>
       </Reveal>
 
-      <div className="mt-8 flex flex-col gap-5">
-        <Reveal className={`${glass} p-7 md:p-8`}>
+      <Reveal className={`${glass} mt-8 grid items-center gap-6 p-4 md:grid-cols-2 md:gap-8 md:p-6`}>
+        <MediaSlot
+          slotId="contact-portrait"
+          alt={contact.photoAlt}
+          guideline={contact.photoGuideline}
+          frameClassName="h-72 w-full rounded-xl"
+          fitContent
+        />
+        <div className="min-w-0 px-2 py-2 md:pr-4">
           <p className="text-2xl font-semibold tracking-tight">{contact.name}</p>
-          <ul className="mt-6 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-6 grid gap-x-8">
             {contact.places.map((place) => (
               <li key={place} className="flex items-center gap-3 py-3">
                 <MapPin
@@ -86,17 +93,8 @@ export function ContactPage() {
               </a>
             </li>
           </ul>
-        </Reveal>
-
-        <Reveal delay={0.08} className={`${glass} overflow-hidden p-3`}>
-          <MediaSlot
-            slotId="contact-portrait"
-            alt={contact.photoAlt}
-            guideline={contact.photoGuideline}
-            frameClassName="h-72 w-full rounded-xl"
-          />
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

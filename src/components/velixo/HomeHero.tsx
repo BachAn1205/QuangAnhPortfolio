@@ -41,6 +41,7 @@ export function HomeHero() {
           alt={hero.portraitAlt}
           guideline={hero.portraitGuideline}
           frameClassName="h-72 w-full rounded-xl"
+          fitContent
         />
       </Reveal>
     </section>

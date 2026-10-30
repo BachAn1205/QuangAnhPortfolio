@@ -30,14 +30,15 @@ export function AboutPage() {
         </div>
       </Reveal>
 
-      <div className="mt-5 grid gap-4 md:grid-cols-3">
+      <div className="mt-5 grid items-start gap-4 md:grid-cols-3">
         {about.images.map((image, idx) => (
           <Reveal key={image.guideline} className={`${glass} overflow-hidden p-3`}>
             <MediaSlot
               slotId={`about-${idx}`}
               alt={image.alt}
               guideline={image.guideline}
-              frameClassName="h-44 w-full rounded-xl"
+              frameClassName="h-72 w-full rounded-xl"
+              fitContent
             />
             <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
               {image.caption}

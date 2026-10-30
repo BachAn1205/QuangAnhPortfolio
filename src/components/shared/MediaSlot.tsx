@@ -18,6 +18,7 @@ export function MediaSlot({
   guideline,
   className = "",
   frameClassName = "",
+  fitContent = false,
 }: {
   slotId: string;
   alt: string;
@@ -26,6 +27,8 @@ export function MediaSlot({
   className?: string;
   /** Class cho khung media (chiều cao, bo góc…) */
   frameClassName?: string;
+  /** Khi đã có media, khung cao theo ảnh để không cắt nội dung */
+  fitContent?: boolean;
 }) {
   const { getMedia, uploadMedia, deleteMedia } = useProjectMedia();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,6 +38,7 @@ export function MediaSlot({
   const current = getMedia(slotId);
   const hasMedia = Boolean(current);
   const video = current ? isVideoUrl(current) : false;
+  const hugMedia = fitContent && hasMedia;
 
   const onFile = async (file: File | undefined) => {
     if (!file) return;
@@ -66,13 +70,21 @@ export function MediaSlot({
   return (
     <div className={`flex h-full min-h-0 flex-col gap-2 ${className}`}>
       <div
-        className={`relative min-h-[8rem] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900/80 ${frameClassName}`}
+        className={`w-full overflow-hidden ${
+          hugMedia
+            ? "rounded-xl"
+            : `relative min-h-[8rem] bg-zinc-100 dark:bg-zinc-900/80 ${frameClassName}`
+        }`}
       >
         {hasMedia && current ? (
           video ? (
             <video
               src={current}
-              className="absolute inset-0 h-full w-full object-cover"
+              className={
+                hugMedia
+                  ? "block h-auto w-full"
+                  : "absolute inset-0 h-full w-full object-contain"
+              }
               controls
               playsInline
               preload="metadata"
@@ -87,7 +99,11 @@ export function MediaSlot({
             <img
               src={current}
               alt={alt}
-              className="absolute inset-0 h-full w-full object-cover"
+              className={
+                hugMedia
+                  ? "block h-auto w-full"
+                  : "absolute inset-0 h-full w-full object-contain"
+              }
               loading="lazy"
             />
           )

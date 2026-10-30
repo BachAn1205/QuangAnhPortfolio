@@ -43,7 +43,8 @@ export function LeadershipPage() {
               slotId={`leadership-featured-${idx}`}
               alt={`${leadership.featured.title} media ${idx + 1}`}
               guideline={guide}
-              frameClassName="h-28 w-full rounded-2xl"
+              frameClassName="h-72 w-full rounded-2xl"
+              fitContent
             />
           ))}
         </div>
@@ -54,7 +55,7 @@ export function LeadershipPage() {
 
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
         {[leadership.uk, leadership.vietnam].map((column) => (
-          <Reveal key={column.title} className={`${glass} p-6`}>
+          <Reveal key={column.title} className={`${glass} flex h-full flex-col p-6`}>
             <h2 className="text-lg font-semibold">{column.title}</h2>
             <div className="mt-4 space-y-5">
               {column.roles.map((role) => (
@@ -69,7 +70,7 @@ export function LeadershipPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-5">
+            <div className="mt-auto pt-5">
               <MediaSlot
                 slotId={
                   column.title === leadership.uk.title
@@ -78,7 +79,8 @@ export function LeadershipPage() {
                 }
                 alt={column.photoAlt}
                 guideline={column.photoGuideline}
-                frameClassName="h-44 w-full rounded-2xl"
+                frameClassName="h-72 w-full rounded-2xl"
+                fitContent
               />
             </div>
           </Reveal>

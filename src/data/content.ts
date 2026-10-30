@@ -9,7 +9,7 @@ export const site = {
   github: "https://github.com/nquanganh08-svg",
   nav: [
     { label: "About", href: "/" },
-    { label: "Engineering Projects", href: "/projects" },
+    { label: "Engineering & Experience", href: "/projects" },
     { label: "Venture & Leadership", href: "/leadership" },
     { label: "Broadcasting", href: "/broadcasting" },
     { label: "Contact", href: "/contact" },
@@ -83,8 +83,34 @@ export const about = {
 } as const;
 
 export const projectsSection = {
-  heading: "Engineering Projects & Scientific Investigation",
-  lead: "Using electrical and electronic engineering to solve practical problems, particularly in energy efficiency and power consumption.",
+  heading: "Professional Internship",
+  projectsHeading: "Personal Projects",
+} as const;
+
+export const internship = {
+  role: "Electrical Engineering Intern",
+  organization: "Dong Tam Industrial JSC, Hanoi, Vietnam",
+  timeline: "Jun 2026 - Aug 2026",
+  duties: [
+    {
+      index: "01",
+      title: "On site",
+      detail:
+        "Shadowed senior engineers during on-site machinery installations, gaining practical knowledge of electrical equipment layouts in industrial control rooms.",
+    },
+    {
+      index: "02",
+      title: "Manuals",
+      detail:
+        "Localized technical manuals, operational guidelines, and control system documentation from English to Vietnamese to support local maintenance staff.",
+    },
+    {
+      index: "03",
+      title: "Drawings",
+      detail:
+        "Modified and updated electrical wiring diagrams and installation blueprints to ensure accurate on-site connections.",
+    },
+  ],
 } as const;
 
 export type Project = {
