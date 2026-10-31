@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DownloadSimple } from "@phosphor-icons/react";
@@ -8,9 +9,88 @@ import { site } from "@/data/content";
 
 export function SiteNav() {
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+  const hiddenRef = useRef(false);
+  const [hidden, setHidden] = useState(false);
+  const [barHeight, setBarHeight] = useState(0);
+
+  const setNavHidden = (next: boolean) => {
+    if (hiddenRef.current === next) return;
+    hiddenRef.current = next;
+    setHidden(next);
+  };
+
+  useEffect(() => {
+    hiddenRef.current = false;
+    setHidden(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const syncHeight = () => setBarHeight(header.offsetHeight);
+    syncHeight();
+    const observer = new ResizeObserver(syncHeight);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let acc = 0;
+
+    const onWheel = (event: WheelEvent) => {
+      if (window.scrollY < 48) {
+        acc = 0;
+        setNavHidden(false);
+        return;
+      }
+      if (event.deltaY < 0) {
+        acc = 0;
+        setNavHidden(false);
+      } else if (event.deltaY > 0) {
+        setNavHidden(true);
+      }
+    };
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      lastY = y;
+      if (y < 48) {
+        acc = 0;
+        setNavHidden(false);
+        return;
+      }
+      acc += delta;
+      if (acc <= -4) {
+        acc = 0;
+        setNavHidden(false);
+      } else if (acc >= 24) {
+        acc = 0;
+        setNavHidden(true);
+      }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, true);
+    };
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-zinc-100 dark:border-white/10 dark:bg-[#070b12]">
+    <>
+    <header
+      ref={headerRef}
+      onFocus={() => setNavHidden(false)}
+      className={`fixed inset-x-0 top-0 z-40 border-b border-zinc-200/80 bg-zinc-100 transition-transform duration-300 motion-reduce:transition-none dark:border-white/10 dark:bg-[#070b12] ${
+        hidden ? "pointer-events-none -translate-y-full" : "translate-y-0"
+      }`}
+    >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-4 py-3 md:px-6">
         <div className="flex items-center gap-3">
           <Link
@@ -72,5 +152,7 @@ export function SiteNav() {
         </nav>
       </div>
     </header>
+    <div aria-hidden style={{ height: barHeight }} />
+    </>
   );
 }

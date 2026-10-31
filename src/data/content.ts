@@ -143,6 +143,7 @@ export type Project = {
   drawings?: { title: string; slots: { slotId: string; guideline: string }[] }[];
   /** Giữ id ảnh đã upload khi thứ tự khung đổi */
   mediaSlotIds?: string[];
+  repoUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -230,6 +231,7 @@ export const projects: Project[] = [
   {
     id: "smart-heater",
     title: "Smart Heater Control System (Campus IoT)",
+    repoUrl: "https://github.com/nquanganh08-svg/heaters-controlled--system",
     highlight:
       "A control system that lets students request heat and lets house parents switch heaters remotely, including automatic operation from sensor readings.",
     domain: "IoT Systems",
@@ -312,10 +314,6 @@ export const projects: Project[] = [
             slotId: "project-smart-heater-drawing",
             guideline: "Bản vẽ kỹ thuật của heater.",
           },
-          {
-            slotId: "project-smart-heater-built",
-            guideline: "Ảnh thực tế mạch heater đã lắp.",
-          },
         ],
       },
       {
@@ -324,6 +322,15 @@ export const projects: Project[] = [
           {
             slotId: "project-smart-heater-transmitter",
             guideline: "Bản vẽ hoặc ảnh mạch transmitter.",
+          },
+        ],
+      },
+      {
+        title: "",
+        slots: [
+          {
+            slotId: "project-smart-heater-built",
+            guideline: "Ảnh thực tế mạch heater đã lắp.",
           },
         ],
       },
@@ -614,8 +621,6 @@ export const broadcasting = {
 export const contact = {
   heading: "Contact",
   name: "Nguyen Quang Anh",
-  photoAlt: "Portrait for the contact page",
-  photoGuideline: "Ảnh chân dung hoặc ảnh liên hệ của học viên.",
   places: ["Northampton, UK", "Hanoi, Vietnam"],
   githubLabel: "nquanganh08-svg",
   websiteLabel: "Website",

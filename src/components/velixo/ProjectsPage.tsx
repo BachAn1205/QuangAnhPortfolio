@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown, GithubLogo } from "@phosphor-icons/react";
 import { MediaSlot } from "@/components/shared/MediaSlot";
 import { Reveal } from "@/components/velixo/Reveal";
 import { glass } from "@/components/velixo/styles";
@@ -48,19 +48,26 @@ function CaseBody({ project }: { project: Project }) {
       />
 
       {project.drawings?.length ? (
-        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid items-start gap-x-6 gap-y-8 md:grid-cols-2">
           {project.drawings.map((group) => (
-            <section key={group.title} className="min-w-0">
-              <SectionTitle>{group.title}</SectionTitle>
+            <section key={group.slots[0]?.slotId ?? group.title} className="min-w-0">
+              <SectionTitle>
+                <span className={group.title ? undefined : "invisible"} aria-hidden={group.title ? undefined : true}>
+                  {group.title || "Heaters"}
+                </span>
+              </SectionTitle>
               <div className="mt-3 space-y-4">
                 {group.slots.map((slot) => (
                   <MediaSlot
                     key={slot.slotId}
                     slotId={slot.slotId}
-                    alt={`${project.title}: ${group.title}`}
+                    alt={`${project.title}: ${group.title || "Heaters"}`}
                     guideline={slot.guideline}
-                    frameClassName="h-72 w-full rounded-xl"
-                    fitContent
+                    frameClassName={
+                      slot.slotId.endsWith("drawing") || slot.slotId.endsWith("transmitter")
+                        ? "aspect-[3588/1713] w-full rounded-xl bg-white"
+                        : "aspect-[1554/1278] w-full rounded-xl bg-white"
+                    }
                   />
                 ))}
               </div>
@@ -231,6 +238,24 @@ function TechStack({ tags }: { tags: string[] }) {
   );
 }
 
+function RepoLink({ href }: { href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex shrink-0 items-center gap-1.5 bg-teal-700 py-1.5 pr-6 pl-3 text-xs font-semibold text-white hover:bg-teal-600 dark:bg-teal-500 dark:text-zinc-950 dark:hover:bg-teal-400"
+      style={{
+        clipPath:
+          "polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%)",
+      }}
+    >
+      <GithubLogo size={14} weight="fill" />
+      GitHub
+    </a>
+  );
+}
+
 function ProjectCard({
   project,
   featured = false,
@@ -249,15 +274,18 @@ function ProjectCard({
         </p>
       ) : null}
 
-      <h2
-        className={
-          featured
-            ? `${showAward ? "mt-3" : ""} text-3xl font-semibold tracking-tight md:text-4xl`
-            : "text-2xl font-semibold tracking-tight md:text-[1.7rem]"
-        }
-      >
-        {project.title}
-      </h2>
+      <div className={`flex flex-wrap items-center gap-x-3 gap-y-2 ${showAward ? "mt-3" : ""}`}>
+        <h2
+          className={
+            featured
+              ? "text-3xl font-semibold tracking-tight md:text-4xl"
+              : "text-2xl font-semibold tracking-tight md:text-[1.7rem]"
+          }
+        >
+          {project.title}
+        </h2>
+        {project.repoUrl ? <RepoLink href={project.repoUrl} /> : null}
+      </div>
       <p className="mt-2 text-sm font-medium leading-relaxed text-teal-800 dark:text-teal-200">
         {project.highlight}
       </p>

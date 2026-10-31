@@ -7,7 +7,6 @@ import {
   MapPin,
   Phone,
 } from "@phosphor-icons/react";
-import { MediaSlot } from "@/components/shared/MediaSlot";
 import { Reveal } from "@/components/velixo/Reveal";
 import { glass } from "@/components/velixo/styles";
 import { contact, site } from "@/data/content";
@@ -24,15 +23,8 @@ export function ContactPage() {
         </h1>
       </Reveal>
 
-      <Reveal className={`${glass} mt-8 grid items-center gap-6 p-4 md:grid-cols-2 md:gap-8 md:p-6`}>
-        <MediaSlot
-          slotId="contact-portrait"
-          alt={contact.photoAlt}
-          guideline={contact.photoGuideline}
-          frameClassName="h-72 w-full rounded-xl"
-          fitContent
-        />
-        <div className="min-w-0 px-2 py-2 md:pr-4">
+      <Reveal className={`${glass} mt-8 p-6 md:p-8`}>
+        <div className="min-w-0">
           <p className="text-2xl font-semibold tracking-tight">{contact.name}</p>
           <ul className="mt-6 grid gap-x-8">
             {contact.places.map((place) => (

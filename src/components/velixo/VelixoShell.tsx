@@ -1,10 +1,11 @@
 import { CircuitBackground } from "@/components/shared/CircuitBackground";
+import { NextPageLink } from "@/components/layout/NextPageLink";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { SiteFooter } from "@/components/velixo/SiteFooter";
 
 export function VelixoShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-zinc-100 text-zinc-900 dark:bg-[#070b12] dark:text-zinc-50">
+    <div className="relative min-h-[100dvh] overflow-x-clip bg-zinc-100 text-zinc-900 dark:bg-[#070b12] dark:text-zinc-50">
       <CircuitBackground />
       <div
         aria-hidden
@@ -30,6 +31,7 @@ export function VelixoShell({ children }: { children: React.ReactNode }) {
         className="mx-auto max-w-[1400px] px-4 pb-28 pt-8 outline-none md:px-6"
       >
         {children}
+        <NextPageLink />
       </main>
       <SiteFooter />
     </div>
